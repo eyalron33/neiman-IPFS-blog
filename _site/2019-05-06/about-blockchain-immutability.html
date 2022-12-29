@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>About Blockchain Immutability | Neiman’s Blog</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="About Blockchain Immutability" />
+<meta name="author" content="Neiman" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A discussion about blockchain immutability myth including a suggestion for immutability model for blockchains" />
+<meta property="og:description" content="A discussion about blockchain immutability myth including a suggestion for immutability model for blockchains" />
+<link rel="canonical" href="http://localhost:4000/blog/2019-05-06/about-blockchain-immutability" />
+<meta property="og:url" content="http://localhost:4000/blog/2019-05-06/about-blockchain-immutability" />
+<meta property="og:site_name" content="Neiman’s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-05-06T00:00:00+02:00" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","url":"http://localhost:4000/blog/2019-05-06/about-blockchain-immutability","headline":"About Blockchain Immutability","dateModified":"2019-05-06T00:00:00+02:00","datePublished":"2019-05-06T00:00:00+02:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2019-05-06/about-blockchain-immutability"},"author":{"@type":"Person","name":"Neiman"},"description":"A discussion about blockchain immutability myth including a suggestion for immutability model for blockchains","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/blog/assets/main.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/assets/apple-touch-icon.png">
+
+</head>
+
+
+  <body>
+
+    <nav class="nav">
+  <div class="nav-container">
+    <a href="/blog/">
+    	<img src="/blog/resources/images/neiman_head_circle.png " height="80">
+    </a>
+    <ul>
+      <li><a href="/blog/">Home</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+    <main>
+      <div class="post">
+  <div class="post-info">
+    <span>Written by</span>
+    
+        Neiman
+    
+
+    
+      <br>
+      <span>on&nbsp;</span><time datetime="2019-05-06 00:00:00 +0200">May 06, 2019</time>
+    
+  </div>
+
+  <h1 class="post-title">About Blockchain Immutability</h1>
+  <div class="post-line"></div>
+
+  <h2 id="introduction">Introduction</h2>
+
+<p>Immutability is an inseparable characteristic of blockchains. Every blockchain promises immutability. Some implicitly, as in Bitcoin where Satoshi Nakamoto <a href="https://bitcoin.org/bitcoin.pdf">mentions</a> “transactions that are computationally impractical to reverse”. Others explicitly, as in the case of <a href="https://steemit.com/steem/@m0se/steem-is-immutable-think-twice-before-you-post-you-can-t-delete-later-on">Steem</a>, or most famously, <a href="https://github.com/ethereum/wiki/wiki/White-Paper">Ethereum</a>.</p>
+
+<p>Recent events, namely, several Ethereum hard forks, raised myriad discussions, <a href="https://www.reddit.com/r/ethereum/comments/59naa2/what_does_immutability_really_mean/">some of them</a> driven by pillars of the community, making it clear that there is a lack of clarity and consensus about what immutability is.</p>
+
+<p>Ethereum classic, which was created in the wake of Ethereum’s DAO hardfork (see details below), <a href="https://ethereumclassic.github.io/">based</a> its philosophy around immutability. Failing to phrase it accurately led to experts, such as Princeton’s associate professor Emin Gün Sirer, <a href="https://twitter.com/el33th4xor/status/820296557836701697">criticising</a> Ethereum Classic for repeatedly violating the immutability they brag of.</p>
+
+<p>We provide here a more precise definition of immutability. This is an essential step in the development of blockchains, as it is impossible to expect a blockchain to be immutable without first precisely defining this term.</p>
+
+<p>As an example, we rephrase Ethereum Classic’s immutability principles in our terminology.</p>
+
+<p>We define two types of immutability.</p>
+
+<ol>
+  <li><strong>Immutability of History (IoH)</strong> ensures transaction finality by demanding immutability of past consensus, i.e. that the consensus about the longest chain at past time points will not change.</li>
+  <li><strong>Immutability of Process (IoP)</strong> protects against irregular transactions or changes to the scripting language by demanding that the definition of valid blocks and chains will not change.</li>
+</ol>
+
+<p>Since complete adherence to IoP may result in stagnation of a blockchain, we later on divide its possible violation to four types; some of them may be considered as positive violations of IoP (such as fixing bugs or adding features).</p>
+
+<p>The word “immutability” may be misleading, as in practice any change to a blockchain can be made if a large enough consensus is achieved.</p>
+
+<p>Hence, what we establish in this text is not a tool to improve blockchains’ security, but rather a concept to improve blockchains designers clarity. We hope that future white papers will clearly specify which type of immutability they aim for, and which type of immutability, if any, is breached with each fork.</p>
+
+<p>But first we begin with some history, explaining the roots of the immutability discussion.</p>
+
+<h2 id="the-roots-of-the-blockchain-immutability-myth">The Roots of the Blockchain Immutability Myth</h2>
+
+<p>In the initial wave of blockchain enthusiasm, people bestowed upon the technology properties it does not have.</p>
+
+<p>The fact that a transaction cannot be reversed by a centralized body formed into “transaction cannot be reversed, period” (which is false). The fact that proof of work validity is backed by a mathematical proof turned into “blockchain validity is backed by mathematical proofs” (again, false).</p>
+
+<p>Add to this the fact that this futuristic technology was invented by the mysterious Satoshi Nakamoto (with further development by the equally mysterious <a href="https://monero.stackexchange.com/questions/162/what-is-known-about-nicolas-van-saberhagen">Nicolas van Saberhagen</a> or <a href="https://motherboard.vice.com/read/lord-voldemort-tom-elvis-jedusor-is-trying-to-save-bitcoin-mimblewimble">Tom Elvis Jedusor</a>) which made blockchains seem more like science fiction’s <a href="https://en.wikipedia.org/wiki/Big_Dumb_Object">Big Dumb Object</a> concept than just another human invention.</p>
+
+<p>The implicit Big Dumb Object misconception held as long as there were no major blockchain protocol scandals. But then came the DAO saga, shattering this comparison.</p>
+
+<h2 id="the-dao-incident-and-the-war-on-immutability">The DAO Incident and the War on Immutability</h2>
+
+<p>The DAO (Distributed Autonomous Organization) was a project run on top of Ethereum’s blockchain. Slock.it, the creator of The DAO, collected around 150 million dollars (in the form of Ethereum) from the public, and let The DAO’s smart contract manage it. The project was Ethereum’s flagship, where Ethereum’s inventor, Vitalik Buterin, <a href="https://twitter.com/vitalikbuterin/status/741176077435973632">proclaimed</a> that in a few months The DAO would turn into a liquid democracy.</p>
+
+<p>That’s when things went wrong. Drastically wrong.</p>
+
+<p>The DAO smart contract had a few bugs, and on the morning of the 17th of June 2016, a malicious attacker abused one of them to steal 60 million dollars (in terms of Ether).</p>
+
+<p>This hack had nothing to do with Ethereum’s blockchain immutability. The DAO was not a blockchain, but rather a project using Ethereum’s blockchain. The hack was not “cheating” the blockchain, but abusing a bug in The DAO’s code. It was similar to Bitcoin’s infamous Mt. Gox accident: badly written code was abused to hack a system and steal funds from its users.</p>
+
+<p>The thing that destroyed the immutability of Ethereum’s blockchain was the subsequent hard fork. The hard fork introduced irregular transactions, taking the stolen funds from the hacker’s hands. Following the acceptance of the hard fork, <a href="https://bitcointalk.org/">Bitcointalk</a> forum was filled with immutability discussions. A <a href="https://bitcointalk.org/index.php?topic=1575487.msg15935700#msg15935700">Wikipedia war</a> on how to define a blockchain began.</p>
+
+<p>Some claimed that immutability was not breached, as the blocks were not changed, but merely irregular transactions were introduced. Others disagreed, claiming that immutability is also about the process, and not only the history. The discussions led to Gavin Wood, Ethereum’s co-founder and the author of Ethereum’s specifications, asking publically, “<a href="https://www.reddit.com/r/ethereum/comments/59naa2/what_does_immutability_really_mean/">what does immutability really mean</a>?”</p>
+
+<p>The DAO hard fork <a href="https://bitcointalk.org/index.php?topic=1575487.msg15833662#msg15833662">was</a> different from all others that occurred before. It obviously surprised many, who thought that such a thing was impossible. To understand the root of the surprise, we have to distinguish next between two similar-but-different terms.</p>
+
+<h2 id="between-improbable-and-extremely-hard">Between Improbable and Extremely Hard</h2>
+
+<p>There are a few attack vectors on Bitcoin.</p>
+
+<p>One is double spending via majority of hash power. If you have 51% of the network’s computational power (in some scenarios, even slightly less), you can make a big transaction, get the reward once it’s mined, and then use your superior computational power to create a new longer chain which doesn’t have this transaction.</p>
+
+<p>Will it work? <a href="https://blockchain.info/charts/hash-rate">Bitcoin’s hash power</a> stands at the end of February 2017 at more than 3,000,000 TH/s, which means that you’ll need at least 215000 units of one of the <a href="https://www.hobbymining.com/mining-hardware/">strongest miner</a> (Antminer S9, 14 TH/s, 2100 dollar a piece), costing around 450 million dollars. That’s before calculating the electricity in, and the fact that this is an upper bound on the miners capabilities. Possible? Yes. Hard? Extremely.</p>
+
+<p>The second attack vector is changing Bitcoin’s protocol. For this you need to write a modified client giving you extra coins, and then convince a large enough portion of the community to use your version. Remembering that it’s a community that has been arguing about block size for more than a year now shows that this way is not practical. Possible? Yes. Hard? Extremely.</p>
+
+<p>A third attack vector is to brute force hack a private key. But that’s <a href="http://security.stackexchange.com/questions/25375/why-not-use-larger-cipher-keys/25392#25392">not even physically possible</a>. What you can do is try to guess the private key. But the number of possibilities is so large, which makes it very <strong>improbable</strong> that you’ll succeed. Actually, it is so improbable to guess a private key that some would argue that Bitcoin private keys are as strong as the laws of nature (which may themselves be high probability events and not really “laws” for all that we know.)</p>
+
+<p>It is easy to confuse and project the private key immutability upon all of the other attacking vectors. But in reality, it is just not the case. Blockchains can be hacked, but it’s just extremely hard in general. Though, as the DAO hard fork demonstrated, it may not even be that difficult to do under certain circumstances.</p>
+
+<h2 id="defining-immutability">Defining Immutability</h2>
+
+<p>Time for the big question, what does immutability mean?</p>
+
+<p>In Java or Rust programming languages, for example, Immutability is a design pattern, describing “an object which cannot be modified by the code of the program after it is first assigned a value”. Is this absolute immutability? No. The object can be changed from outside the program by the system operator.</p>
+
+<p>Actually, the same is true for any centralized system: if the operator controls the memory directly, then nothing is really immutable. In a distributed system this is allegedly solved, since there is no central operator. However, there we encounter a much different problem (the Byzantine Generals’ Problem) : <strong>which value</strong> is immutable? Each node may store a different value, so exactly which value is it that we want to be immutable?</p>
+
+<p>Blockchains solve this problem by defining a method of determining the state of a distributed system at a specific point in time. Intuitively then, immutability may be the expectation that a state cannot be changed after it has been determined by the system, and that the process of determining the state cannot be changed.</p>
+
+<p>We define these accurately for blockchains containing the following components (a full formal definition of a blockchain is beyond the scope of this text):</p>
+
+<ol>
+  <li>A collection of linked blocks, including at least one genesis block (i.e. with no parents).</li>
+  <li>A validation function taking a chain of linked blocks beginning from a genesis block and returning whether it is a valid chain or not.</li>
+  <li>A consensus protocol defining what the “main chain” is in the collection of blocks (in Bitcoin, for example, it is the one demonstrating the most hash power).</li>
+  <li>A depth-standard, <strong>D</strong>, specifying which block depth in a main chain is enough in order for users to consider it as part of the main chain (in Bitcoin, for example, the standard is six confirmations).</li>
+</ol>
+
+<p>This leads us to the following specification of the two types of blockchains defined at the beginning:</p>
+
+<p><span style="color: #333300;"><strong>Immutability of History (IoH)</strong>: If a block <em>B</em> has height <em>H</em> (i.e., there are <em>H</em> blocks proceeding it) and depth deeper than <strong>D</strong> (i.e, there are at least <strong>D</strong> blocks after it) in the main chain at some time <em>T</em>, then the main chain will contain <em>B</em> at any time later than <em>T</em>, and the height of B will always be equal to H.</span></p>
+
+<p>IoH both demands the consensus protocol be safe enough such that if a block reached a certain depth, it would be included in the main chain at all future times, and that the consensus protocol be changed only if it does not influence past states. In addition it is specified that the height of <em>B</em> is always <em>H</em> in order to make it impossible to add blocks before block B.</p>
+
+<p>IoH is what most users understand, intuitively, when they speak of blockchains being immutable. It is this immutability that provides transactions finality.</p>
+
+<p><span style="color: #333300;"><strong>Immutability of Process (IoP)</strong>: The validation function may not be changed.</span></p>
+
+<p>IoP disqualifies irregular transactions or unexpected blockchain behavior over time. However, since it also disqualifies positive changes, such as improvement of the protocol, it will often be violated. We classify possible violations according to four types.</p>
+
+<ol>
+  <li><strong>Removing a bug</strong>. This means removing options from the validation function. An example is <a href="https://blog.ethereum.org/2016/10/13/announcement-imminent-hard-fork-eip150-gas-cost-changes/">Ethereum’s hardfork</a>, in which the creation of empty accounts was disallowed.</li>
+  <li><strong>Adding a feature.</strong> It is impossible to think of all needful blockchain features in advance. An example is <a href="https://bitcoincore.org/en/2016/01/26/segwit-benefits/">SegWit</a>.</li>
+  <li><strong>Fixing a bug.</strong> Similar to ‘A’, but here a feature is fixed, not removed. An example is <a href="https://blog.ethereum.org/2016/10/13/announcement-imminent-hard-fork-eip150-gas-cost-changes/">Ethereum’s gas costs changes</a>.</li>
+  <li><strong>One-time actions.</strong> For example, irregular transactions.</li>
+</ol>
+
+<p>Finally, note that <em>irregular transactions are often equivalent to violating immutability of history</em>. If the blockchain contains a transaction from A to B, and an irregular transaction from B to C is added, it is equivalent to reversing the valid transaction from A to B and adding an irregular transaction from A to C.</p>
+
+<h2 id="the-ethereum-classic-code-of-principles--rephrased">The Ethereum Classic Code of Principles – Rephrased</h2>
+
+<p>In the wake of Ethereum’s DAO hard fork, a new coin came to life. It continued Ethereum’s unforked chain, where the DAO’s money remained in the hands of the hacker. Some of its proponents claim that it is the original and true Ethereum blockchain.</p>
+
+<p>The main selling point of Ethereum Classic was its immutability. They phrased their “code of principles” in a <a href="https://ethereumclassic.github.io/assets/ETC_Declaration_of_Independence.pdf">declaration of independence</a> publication, but the document certainly had problems phrasing it in a satisfactory manner. While the more technical phrasings were criticised by experts, the human phrasing (“no bailout hardforks”) was incomplete in light of some actions that the community took, namely, not following Ethereum’s example in deleting empty accounts from the blockchain.</p>
+
+<p>Using our definition it is easy to phrase “Ethereum Classic’s code of principles” as follows:</p>
+
+<p><em>Ethereum Classic promises to never do a hard fork that violates IoH or a “one-time action” kind of violation to IoP that creates an “irregular transaction”. However, Ethereum Classic allows violation of other principles of IoP, if those improve the system.</em></p>
+
+<h2 id="conclusion-and-clarity-of-blockchains-design">Conclusion and Clarity of Blockchains Design</h2>
+
+<p>If a blockchain were only about immutability, its technical state would have been frozen at launch. But such a governing model would lead to stagnation. A more practical approach, as with defensive democracy, is that a blockchain must guard itself, even against the occasional breach of immutability.</p>
+
+<p>What we suggest is not utter immutability, but utter clarity. Specifically, we propose the following rules:</p>
+
+<ol>
+  <li>A blockchain’s white paper must specify which immutability it aims to maintain, both within each of its versions, and across planned hard forks.</li>
+  <li>A whitepaper must contain a protocol for forks which breach immutability. An example of this is Bitcoin’s 95% adoption. Lack of such a protocol leads to impromptu protocols, such as Ethereum’s <a href="https://blog.ethereum.org/2016/07/26/onward_from_the_hard_fork/">usage of carbonvote</a> before the DAO hardfork (this ended up <a href="https://medium.com/@WhalePanda/what-happened-with-ethereum-eth-and-ethereum-classic-etc-3c69fc7cbb69#.su7oe2sc2">being criticized</a>).</li>
+  <li>In every unplanned fork, it must be specified if any immutability layers are breached.</li>
+  <li>Each immutability breach must be clearly stated and justified.</li>
+</ol>
+
+<p>In addition, forks which are predefined in the whitepaper (and hence are well-known in advance) should not be considered immutability-breaching.</p>
+
+<p>While defining immutability may be seen as a grey task, it is in reality one of the most important things in designing blockchains.</p>
+
+<p>Immutability is one of the main qualities that blockchains offer to replace and fix the traditional centralized institutes system. This immutability is saved by the consensus protocol and the community, and hence it must be accurately understood by the creators, managers and users of each blockchain which immutability they aim to achieve.</p>
+
+<p>Ignoring accurately defining immutability beforehand will almost surely end in community disputes and possible splits further down the road. As members of the blockchain community, we must all strive to avoid this.</p>
+
+<p>Please keep that in mind the next time you work on a whitepaper.</p>
+
+<p><strong>[Written by Eyal Ron and Craig Sailor, with additional valuable input by Dr. Simone Wurster]</strong></p>
+
+</div>
+
+<div class="pagination">
+  
+    <a href="/blog/2019-05-28/list-of_ENSIPFS-websites" class="left arrow">&#8592;</a>
+  
+  
+    <a href="/blog/2019-03-14/ENSIPFS-Part-3-Creation" class="right arrow">&#8594;</a>
+  
+
+  <a href="#" class="top">Top</a>
+</div>
+
+    </main>
+
+    <footer>
+  <span>
+     -- Dwebsites love robots, androids and electric sheep --
+  </span>
+</footer>
+
+  </body>
+</html>

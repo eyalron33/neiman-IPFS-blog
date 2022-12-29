@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>ENS+IPFS Part 3: Building an ENS+IPFS Website | Neiman’s Blog</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="ENS+IPFS Part 3: Building an ENS+IPFS Website" />
+<meta name="author" content="Neiman" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="How to build an ENS+IPFS website?" />
+<meta property="og:description" content="How to build an ENS+IPFS website?" />
+<link rel="canonical" href="http://localhost:4000/blog/2019-03-14/ENSIPFS-Part-3-Creation" />
+<meta property="og:url" content="http://localhost:4000/blog/2019-03-14/ENSIPFS-Part-3-Creation" />
+<meta property="og:site_name" content="Neiman’s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-03-14T00:00:00+01:00" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","url":"http://localhost:4000/blog/2019-03-14/ENSIPFS-Part-3-Creation","headline":"ENS+IPFS Part 3: Building an ENS+IPFS Website","dateModified":"2019-03-14T00:00:00+01:00","datePublished":"2019-03-14T00:00:00+01:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2019-03-14/ENSIPFS-Part-3-Creation"},"author":{"@type":"Person","name":"Neiman"},"description":"How to build an ENS+IPFS website?","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/blog/assets/main.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/assets/apple-touch-icon.png">
+
+</head>
+
+
+  <body>
+
+    <nav class="nav">
+  <div class="nav-container">
+    <a href="/blog/">
+    	<img src="/blog/resources/images/neiman_head_circle.png " height="80">
+    </a>
+    <ul>
+      <li><a href="/blog/">Home</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+    <main>
+      <div class="post">
+  <div class="post-info">
+    <span>Written by</span>
+    
+        Neiman
+    
+
+    
+      <br>
+      <span>on&nbsp;</span><time datetime="2019-03-14 00:00:00 +0100">March 14, 2019</time>
+    
+  </div>
+
+  <h1 class="post-title">ENS+IPFS Part 3&#58; Building an ENS+IPFS Website</h1>
+  <div class="post-line"></div>
+
+  <h3 id="LastUpdated">Last updated: 20-feb-2019</h3>
+
+<div class="warning alert">
+  <p>This is Part 3 of the ENS+IPFS posts. <a href="/blog/2019-03-12/ENSIPFS-Part-1-Introduction">Part 1</a> described the technology while <a href="/blog/2019-03-13/ENSIPFS-Part-2-Accessing">Part 2</a> explains how to access such websites.</p>
+</div>
+
+<p>Sadly, we have to begin with a disclaimer.</p>
+
+<div class="note alert">
+  <h4 id="disclaimer">Disclaimer</h4>
+  <p>If you ever worked with a nascent technology, you know how it goes: instructions from Monday morning are obsolete by Tuesday evening.</p>
+
+  <p>It’s hard to keep this post up-to-date (though we try!), so instead we do two things.</p>
+  <ol>
+    <li>Notify on the top of the post (<a href="#LastUpdated">here!</a>) when was it last updated.</li>
+    <li>Focus on the general process and steps to make an ENS+IPFS website, since the general process changes less often than the exact technical details.</li>
+  </ol>
+
+  <p>Knowing the process, the reader can complete the technical details on his own, even if those here are outdated.</p>
+</div>
+
+<p>Setting up ENS+IPFS websites take four steps.</p>
+<ol>
+  <li>Registering an ENS name;</li>
+  <li>Creating a static website;</li>
+  <li>Uploading the static website to IPFS (this returns the IPFS address of the website).</li>
+  <li>Updating the ENS record with the IPFS address of the websites.</li>
+</ol>
+
+<p>You need to repeat steps 2-4 each time you update the website.</p>
+
+<h2 id="tools">Tools</h2>
+<ol>
+  <li><strong>IPFS</strong>. Standard <a href="https://docs.ipfs.io/introduction/install/">IPFS</a> software.</li>
+  <li><strong>Ethereum node</strong>. <a href="https://www.parity.io/">Parity</a> or <a href="https://github.com/ethereum/go-ethereum/wiki/geth">Geth</a>.</li>
+</ol>
+
+<p>Here things become less standard…</p>
+
+<ol start="3">
+  <li><strong>ENS Dapp</strong> (websites to use ENS). There is no one website that gives all options at the moment, see options in each step.</li>
+  <li><strong>Dapp Browser</strong>. Ethereum nodes run locally, and normally browsers don’t allow Dapps to talk to local addresses directly (for justified security reasons). A Dapp browser is a component that connects Dapps to Ethereum nodes. Parity got their own browser, and geth is often combined with Mist. However, we used <a href="http://metamask.io/">Metamask</a> addon for Firefox.</li>
+</ol>
+
+<h2 id="1-registering-an-ens-name">1. Registering an ENS name</h2>
+<p>Registering an ENS name takes five days. It consists of the following steps.</p>
+<ol>
+  <li>Open an auction and bid on the name (72 hours = 3 days);</li>
+  <li>Reveal the bid (48 hours = 2 days);</li>
+  <li>Finalize the purchase (after the reveal the bid option is over).</li>
+</ol>
+
+<p>Where do you do those steps? Good question. At the time of writing the <a href="http://manager.ens.domains/">ENS website</a> doesn’t offer this service, but instead refers to other websites.</p>
+
+<p>The main option is <a href="https://www.myetherwallet.com/#ens">My Ether Wallet</a>. But we tried My Ether Wallet out, step 1 (opening an auction) worked well, while steps 2 and 3 did not. To do those steps we used <a href="https://mycrypto.com/ens">My Crypto</a>. However, the app there is only in the “legacy” website, which is not a good sign.</p>
+
+<h2 id="2-creating-a-static-website">2. Creating a static website</h2>
+<p>We used Jekyll, though there are many alternatives.</p>
+
+<div class="success alert">
+  <p><strong>Tip</strong>. To generate a static website from a Jekyll daemon, run:</p>
+  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget --convert-links --adjust-extension -r http://127.0.0.1:4000/
+</code></pre></div>  </div>
+  <p>where you replace <code class="highlighter-rouge">http://127.0.0.1:4000/</code> with the address of your local Jekyll service.</p>
+</div>
+
+<h2 id="3-uploading-the-static-website-to-ipfs">3. Uploading the static website to IPFS</h2>
+<p>We recap the steps here quickly though you can find them in any IPFS tutorial.</p>
+
+<p>Add the website to IPFS.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ipfs add -r &lt;directory of website&gt;
+</code></pre></div></div>
+<p>The last hash is the output of this command identifies your website. Let’s call it <code class="highlighter-rouge">WebsiteHash</code>.</p>
+
+<p>Start the IPFS daemon to make the website accessible.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ipfs daemon
+</code></pre></div></div>
+<p>To verify that the website is really accessible to IPFS users, test it in <code class="highlighter-rouge">https://ipfs.io/ipfs/WebsiteHash/</code>, where <code class="highlighter-rouge">WebsiteHash</code> is the the value you saved before. You may need to refresh a few times before the websites spreads to the whole IPFS network.</p>
+
+<h2 id="4-updating-the-ens-record-to-point-to-the-ipfs-address-of-the-website">4. Updating the ENS record to point to the IPFS address of the website</h2>
+<p>Managing your ENS domain name in the following URL.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://manager.ens.domains/name/YOURDOMAIN.eth
+</code></pre></div></div>
+<p>(where YOURDOMAIN is the name of your ENS domain).</p>
+
+<p>What’s left to do is to link the ENS to the IPFS address. However, that’s not as simple as you may think..</p>
+
+<p>ENS doesn’t simply give you a “free variable” to write whichever info you want on. Instead you need to tell ENS an address of a smart contract. This smart contract handles writing and reading of data associated to the ENS name.</p>
+
+<p>ENS team supplies a “public resolver” for the common users. They just <a href="https://medium.com/the-ethereum-name-service/the-new-ens-manager-now-supports-eip1577-contenthash-82e2d6724fae">updated the public resolver</a> on the 31st of January to support multihash values (including IPFS addresses).</p>
+
+<p>To set a resolver press the blue button ‘SET’ near the Resolver name. Then you can either give your own resolver address, or choose the option “Use Public Resolver”.</p>
+
+<p>If you use the public resolver, you can next link an IPFS address to your ENS domain. Simply press the ‘+’ button in the records area, and add an IPFS record beginning with “ipfs://WebsiteHash” (where WebsiteHash is the hash you saved in Step 3 while putting your website in IPFS).</p>
+
+<p>The <strong>problem</strong> is that the tools to view ENS+IPFS websites still didn’t catch up with the new public resolver. We use a wordaround till they catch up.</p>
+
+<h3 id="41-temporary-workaround-till-tools-adjust-to-the-new-public-resolver">4.1 Temporary workaround till tools adjust to the new public resolver</h3>
+<p>To get your website accessible by tools like Metamask and Status, do the following.</p>
+<ol>
+  <li>Set the resolver to the old public resolver address: <code class="highlighter-rouge">0x1da022710dF5002339274AaDEe8D58218e9D6AB5</code>. You’ll get a warning, get used to ignore warnings;</li>
+  <li>The old resolver doesn’t support IPFS addresses directly! Instead, you need to transform the IPFS address to a hex value. You <a href="https://codepen.io/phyrex/pen/MBzOGR">this tool</a> to do that.</li>
+  <li>Add the hex value from the previous step as the content for the ENS record</li>
+</ol>
+
+<p>Your ENS+IPFS website should work now!</p>
+
+<p><strong>[This article was originally published in Almonit blog with small modifications]</strong></p>
+
+</div>
+
+<div class="pagination">
+  
+    <a href="/blog/2019-05-06/about-blockchain-immutability" class="left arrow">&#8592;</a>
+  
+  
+    <a href="/blog/2019-03-13/ENSIPFS-Part-2-Accessing" class="right arrow">&#8594;</a>
+  
+
+  <a href="#" class="top">Top</a>
+</div>
+
+    </main>
+
+    <footer>
+  <span>
+     -- Dwebsites love robots, androids and electric sheep --
+  </span>
+</footer>
+
+  </body>
+</html>

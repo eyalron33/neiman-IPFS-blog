@@ -1,0 +1,1119 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/blog/" rel="alternate" type="text/html" /><updated>2022-10-25T14:33:34+02:00</updated><id>http://localhost:4000/blog/feed.xml</id><title type="html">Neiman’s Blog</title><subtitle>Selection of article about decentralized websites from Neiman.</subtitle><author><name>Neiman</name><email>eyal@esteroids.xyz</email></author><entry><title type="html">Woolball - A Name System with Links</title><link href="http://localhost:4000/blog/2022-10-25/Woolball_a_name_system_with_links" rel="alternate" type="text/html" title="Woolball - A Name System with Links" /><published>2022-10-25T01:00:33+02:00</published><updated>2022-10-25T01:00:33+02:00</updated><id>http://localhost:4000/blog/2022-10-25/Woolball_a_name_system_with_links</id><content type="html" xml:base="http://localhost:4000/blog/2022-10-25/Woolball_a_name_system_with_links">&lt;p&gt;&lt;img style=&quot;width: 200px; float: right; padding: 20px&quot; src=&quot;/blog/resources/images/woolball/cat-with-woolball.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;TL;DR&lt;/strong&gt;. Woolball is a name system with links; names can link to each other.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;This simple extension creates a whole new kind of a name system, with extra capabilities over the existing ones, like a native web3 accounts system, a reputation score for names, and structured DAOs.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Woolball is a flat name system! There is no hierarchy, as subdomains are replaced by links. It’s also a cyclic system since names link to each other.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Links are written with a &lt;code class=&quot;highlighter-rouge&quot;&gt;#&lt;/code&gt;, so a link from &lt;code class=&quot;highlighter-rouge&quot;&gt;alice&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;bob&lt;/code&gt; is &lt;code class=&quot;highlighter-rouge&quot;&gt;alice#bob&lt;/code&gt;.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Having all those links makes the graph of the name system look, well, like one big ball of wool.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/blog/resources/images/woolball/woolballs.png&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;1-introduction&quot;&gt;1. Introduction&lt;/h2&gt;
+&lt;p&gt;We introduce Woolball, a flat name system that uses links between names instead of subdomains.&lt;/p&gt;
+
+&lt;p&gt;These links create a new kind of name system with an internal social structure. It yields without any extra effort&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;a Web3 accounts system,&lt;/li&gt;
+  &lt;li&gt;a reputation score for names, and&lt;/li&gt;
+  &lt;li&gt;a tool for making a structure for a DAO.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We believe links bring Internet name systems one step closer to how we handle identities in the physical world.&lt;/p&gt;
+
+&lt;p&gt;Woolball is a flat name system! It has no subdomains. We use links to replace them. Hierarchy is simply not needed.&lt;/p&gt;
+
+&lt;p&gt;Nevertheless, Woolball is an extension of subdomain name systems. Everything you could do with subdomains, you can also do with Woolball.&lt;/p&gt;
+
+&lt;p&gt;This article is a description of Woolball, not a technical specification. We tried to leave as many boring bits out but focused on what’s different. We tried to make things clear, not accurate or tedious.&lt;/p&gt;
+
+&lt;p&gt;Ready? Let’s go! Or as we say in Woolball, “let’s link!”.&lt;/p&gt;
+
+&lt;h3 id=&quot;11-wait-wait-whats-wrong-with-the-subdomain-system&quot;&gt;1.1. Wait wait! What’s wrong with the subdomain system?&lt;/h3&gt;
+&lt;p&gt;Well, nothing is wrong with it, we just don’t think it answers the needs of a Web3 name system.&lt;/p&gt;
+
+&lt;p&gt;Look, people use Web3 name systems, like ENS, as their identity. That’s clear, see crypto Twitter or any other Ethereum social interaction.&lt;/p&gt;
+
+&lt;p&gt;But how are subdomains connected to this identity? That’s less clear.&lt;/p&gt;
+
+&lt;p&gt;When &lt;a href=&quot;https://help.coinbase.com/en/wallet/managing-account/coinbase-ens-support&quot;&gt;Coinbase&lt;/a&gt; give someone a subdomain, they kind of attest something about them. But since this attestation is completely separated from the person’s main ENS name, it’s almost invisible.&lt;/p&gt;
+
+&lt;p&gt;Even worse! Imagine you get subdomains from more organizations (&lt;a href=&quot;https://twitter.com/optinames?s=21&amp;amp;t=ohRJcBEyBZvxGo37quLJ3w&quot;&gt;OptiNames&lt;/a&gt;, &lt;a href=&quot;https://decentraland.org/blog/announcements/id-goes-di/&quot;&gt;Decenterland&lt;/a&gt;, and &lt;a href=&quot;https://bensyc.eth.limo/&quot;&gt;Bensyc&lt;/a&gt; already hand out some). You’ll end up managing dozens of subdomain accounts, so we’re back to web 2.0 all over again.&lt;/p&gt;
+
+&lt;p&gt;Once you replace subdomains with links it all makes sense though. You don’t need to manage dozens of accounts. You just manage yours. All the rest of your accounts are linked to it; they become part of your Web3 identity.&lt;/p&gt;
+
+&lt;h2 id=&quot;2-system-overview&quot;&gt;2. System Overview&lt;/h2&gt;
+&lt;p&gt;Most name systems have only one main object, a name. Woolball, however, has two main objects, a name, and a link. Two! See? it’s already &lt;em&gt;exciting&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;There’s only one layer of names in Woolball. Yup, no TLDs, no subdomains, and no hierarchy at all. There’s simply no need for it. However, all the names in this layer are &lt;em&gt;unique&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Ready? here comes the exciting part: each name can create links to other names (or to other links)!&lt;/p&gt;
+
+&lt;p&gt;Links are a one-directional arrow pointing from one name (linker) into another name or into a link (in both cases they are called linkee).&lt;/p&gt;
+
+&lt;p&gt;Every link has an alias. That alias is unique among all the links coming from one name (so one name can’t make two links with the same alias, got it?).&lt;/p&gt;
+
+&lt;p&gt;How do you call links?&lt;/p&gt;
+
+&lt;p&gt;First, links are written with a &lt;code class=&quot;highlighter-rouge&quot;&gt;#&lt;/code&gt;. A link from &lt;code class=&quot;highlighter-rouge&quot;&gt;alice&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;bob&lt;/code&gt; is &lt;code class=&quot;highlighter-rouge&quot;&gt;alice#bob&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;But if &lt;code class=&quot;highlighter-rouge&quot;&gt;alice&lt;/code&gt; made a link to &lt;code class=&quot;highlighter-rouge&quot;&gt;bob&lt;/code&gt; and gave it the alias “BobThegreat”, then &lt;code class=&quot;highlighter-rouge&quot;&gt;alice#BobThegreat&lt;/code&gt; is the name of this link.&lt;/p&gt;
+
+&lt;p&gt;There’s much more to say about links. How do you use them? What do they inherit from the names they link to? But hold your horses, we’ll get to it in further sections.&lt;/p&gt;
+
+&lt;p&gt;Btw, you can imagine the graph of Woolball as being a collection of names with many links from one name to another. This looks like one big messy “ball of wool”, hence the name.&lt;/p&gt;
+
+&lt;h2 id=&quot;3-names&quot;&gt;3. Names&lt;/h2&gt;
+&lt;p&gt;Woolball names are the basic object of the system.&lt;/p&gt;
+
+&lt;p&gt;They’re also the most boring object of the system since they’re similar to other name systems. Let’s not spend too many words on them.&lt;/p&gt;
+
+&lt;p&gt;The basic facts:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;The ID of the name is the hash of the name.&lt;/li&gt;
+  &lt;li&gt;Each name has an owner, a controller, and a resolver. The owner owns the name, the controllers operate it, and the resolver specifies its functionality. This is similar to ENS.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Names are registered for a finite amount of time (but can be extended).&lt;/p&gt;
+
+    &lt;p&gt;We didn’t want to go down the path of giving away names forever, because we’re afraid of eternity and afraid of losing names when people lose their keys.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Each name can create links (ta-dam!), or others can create links to it (ta-dam again!). This gives two interesting collections associated with each name:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;A collection of all the links the name created.&lt;/li&gt;
+  &lt;li&gt;A collection of all the links pointing to this name.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Who can extend names? The answer is not that simple, since there are now also links in the game. Let’s discuss that in a new subsection.&lt;/p&gt;
+
+&lt;h3 id=&quot;31-extension-of-names&quot;&gt;3.1. Extension of names&lt;/h3&gt;
+&lt;p&gt;We don’t want to let anyone extend the registration of a name; it may cause dead names (where the owner lost the key) to become zombies and be registered to a ghost owner forever.&lt;/p&gt;
+
+&lt;p&gt;But there’s an issue also if we only let the owner of the name extend its own registration.&lt;/p&gt;
+
+&lt;p&gt;Why? Well, when a name expires all the links it created disappear. However, some people may come to rely on those links; this makes it risky for them.&lt;/p&gt;
+
+&lt;p&gt;To prevent the situation of names expiring before all of their links expire, we make the following rule for extending the registration of names.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The registration of a name can be extended either by the owner of the name or by the owner of a valid link (as opposed to an “expired or canceled” link) that this name created.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;4-links&quot;&gt;4. Links&lt;/h2&gt;
+&lt;p&gt;Let’s get the boring bits out first. Like names, each link has&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;a controller,&lt;/li&gt;
+  &lt;li&gt;a resolver.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;However, &lt;em&gt;unlike&lt;/em&gt; names, a link doesn’t have an owner! Instead, it has three new fields.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;from,&lt;/li&gt;
+  &lt;li&gt;to,&lt;/li&gt;
+  &lt;li&gt;type.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The fields ‘from’ and ‘to’ specify who created the link and to where it points. Both ‘from’ and ‘to’ can be either names or links.&lt;/p&gt;
+
+&lt;p&gt;the ‘type’ of the link determines who actually owns the link. By owning we mean the person who can cancel it, transfer it, etc. We describe the possible types in a section below.&lt;/p&gt;
+
+&lt;p&gt;Links have one more additional field, ‘alias’, which determines the name of the link. We’ll discuss that as well in a separate section.&lt;/p&gt;
+
+&lt;p&gt;To sum it all up, a link object has the following structure.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Link {
+    from: nameID
+    to: nameID
+    type;
+    alias;
+    resolver;
+    controller;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The ID of a link is &lt;code class=&quot;highlighter-rouge&quot;&gt;Hash(ID of 'from' field, alias)&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Last but not least, a link can also create other links from itself, and other names or links can link to it.&lt;/p&gt;
+
+&lt;p&gt;So, similar to names, each link has two collections associated with it.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;A collection of all the links the link created.&lt;/li&gt;
+  &lt;li&gt;A collection of all links pointing to this link.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Note that one name (or link) can make several links to another name (or link) as long as each got a different alias.&lt;/p&gt;
+
+&lt;h3 id=&quot;41-ahmadbasia&quot;&gt;4.1. &lt;code class=&quot;highlighter-rouge&quot;&gt;ahmad#basia&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;Links are written with a &lt;code class=&quot;highlighter-rouge&quot;&gt;#&lt;/code&gt;. So if the name &lt;code class=&quot;highlighter-rouge&quot;&gt;ahmad&lt;/code&gt; makes a link to &lt;code class=&quot;highlighter-rouge&quot;&gt;basia&lt;/code&gt; it’s written as &lt;code class=&quot;highlighter-rouge&quot;&gt;ahmad#basia&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;BUT – if &lt;code class=&quot;highlighter-rouge&quot;&gt;ahmad#basia&lt;/code&gt; has a contenthash of a website and is used as a URL in a browser, you need to write &lt;code class=&quot;highlighter-rouge&quot;&gt;greatBasia.ahmad&lt;/code&gt;. See? you exchange the &lt;code class=&quot;highlighter-rouge&quot;&gt;#&lt;/code&gt; with a &lt;code class=&quot;highlighter-rouge&quot;&gt;.&lt;/code&gt;, and reverse the order of names in the link.&lt;/p&gt;
+
+&lt;p&gt;That’s not our fault, that’s how the URL standard is.&lt;/p&gt;
+
+&lt;h3 id=&quot;42-alias&quot;&gt;4.2. Alias&lt;/h3&gt;
+&lt;p&gt;In the real world, identity has two components. One is what you claim about yourself, while the second is what others claim about you.&lt;/p&gt;
+
+&lt;p&gt;For example, you may claim that you are “Ahmad the great”, but you will not really be this person till enough people will think of you as “Ahmad the great”.&lt;/p&gt;
+
+&lt;p&gt;In some cases, your claim about yourself matters much less than what others claim about you.&lt;/p&gt;
+
+&lt;p&gt;A link and its ‘alias’ field is a way to equip an Internet name system with the concept of what others think of you.&lt;/p&gt;
+
+&lt;p&gt;Basically ‘alias’ is a string that is set by the person who created the link. If they choose not to set an ‘alias’, then by default the alias equals the name of the target of the link.&lt;/p&gt;
+
+&lt;p&gt;The field ‘alias’ is unique among all the links a name (or a link) creates. One name (or link) can’t create two links with the same alias.&lt;/p&gt;
+
+&lt;p&gt;The field ‘alias’ determines how we call the link. We’ll show it by example:&lt;/p&gt;
+
+&lt;p&gt;If the name &lt;code class=&quot;highlighter-rouge&quot;&gt;ahmad&lt;/code&gt; makes a link to the name &lt;code class=&quot;highlighter-rouge&quot;&gt;basia&lt;/code&gt;, but doesn’t set an alias, then the name of the link is &lt;code class=&quot;highlighter-rouge&quot;&gt;ahmad#basia&lt;/code&gt;. However, if &lt;code class=&quot;highlighter-rouge&quot;&gt;ahmad&lt;/code&gt; set the alias of the link to &lt;code class=&quot;highlighter-rouge&quot;&gt;greatBasia&lt;/code&gt;, then the name of the link is &lt;code class=&quot;highlighter-rouge&quot;&gt;ahmad#greatBasia&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;43-types-of-links&quot;&gt;4.3. Types of links&lt;/h3&gt;
+&lt;p&gt;The type of the link determines who actually owns it.&lt;/p&gt;
+
+&lt;p&gt;To keep it clear and simple, we defined only three types of links. These types give ownership of the link either to the linker, linkee, or a combination of both of them.&lt;/p&gt;
+
+&lt;p&gt;The types are as follows.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Linker control&lt;/strong&gt;. The link is not transferable, only the linker can extend or cancel it.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Linkee control&lt;/strong&gt;. The link is transferable, where only the linkee can extend, cancel or transfer it.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Mixed control&lt;/strong&gt;. Both the linker and the linkee can transfer, extend or cancel the link.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;44-resolver-and-inheritance&quot;&gt;4.4. resolver and inheritance&lt;/h3&gt;
+&lt;p&gt;An important feature of links is how they inherit data from the linkee.&lt;/p&gt;
+
+&lt;p&gt;By default, everything is inherited from the linkee. This means that if the resolver of the link is empty, then every query for data from the link is like a query to the linkee.&lt;/p&gt;
+
+&lt;p&gt;However, a link can override data from the linkee or extend it, by having its own resolver.&lt;/p&gt;
+
+&lt;h3 id=&quot;45-woolball-is-an-extension-of-subdomains-name-systems&quot;&gt;4.5. Woolball is an extension of subdomains name systems&lt;/h3&gt;
+&lt;p&gt;We said that Woolball is an extension of the current name systems (DNS, ENS), so we have to justify that. Basically, we need to explain how you can do with links everything you can do with subdomains.&lt;/p&gt;
+
+&lt;p&gt;You can create two types of subdomains. Either a subdomain you give someone else (for them to have a cool name) or a subdomain you use for your own usage (like, for your email server).&lt;/p&gt;
+
+&lt;p&gt;A link to someone can do everything that a subdomain you gave to this someone can do. Easy.&lt;/p&gt;
+
+&lt;p&gt;But what’s the equivalent of a subdomain you created for your own usage. Well, it’s a link to yourself.&lt;/p&gt;
+
+&lt;p&gt;To be clear, links can do everything subdomains can do, but subdomains can’t do everything a link can do. Hence it’s an extension.&lt;/p&gt;
+
+&lt;h2 id=&quot;5-interaction-between-links-and-names&quot;&gt;5. Interaction Between Links and Names&lt;/h2&gt;
+&lt;p&gt;The power of Woolball comes out when considering the interaction between links and names. This interaction generates naturally three important systems:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Web3 accounts.&lt;/li&gt;
+  &lt;li&gt;A reputation system.&lt;/li&gt;
+  &lt;li&gt;Structured DAOs.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;51-web3-accounts&quot;&gt;5.1. Web3 accounts&lt;/h3&gt;
+&lt;p&gt;We explain how Woolball generates a Web3 accounts system by an example.&lt;/p&gt;
+
+&lt;p&gt;Let’s say that a DAO called ExampleDAO wants to give an account to one of its members, Alice. How does it do that? It creates a link from &lt;code class=&quot;highlighter-rouge&quot;&gt;exampleDAO&lt;/code&gt; to the name &lt;code class=&quot;highlighter-rouge&quot;&gt;alice&lt;/code&gt;, leaving the alias empty.&lt;/p&gt;
+
+&lt;p&gt;… and that’s it! Alice has an account in ExampleDAO called &lt;code class=&quot;highlighter-rouge&quot;&gt;exampledao#alice&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;In which sense is it an account? If ExampleDAO tries to get data from &lt;code class=&quot;highlighter-rouge&quot;&gt;exampledao#alice&lt;/code&gt;, it sees the resolver is empty (since Alice didn’t do anything yet). But then it &lt;em&gt;follows&lt;/em&gt; the link to &lt;code class=&quot;highlighter-rouge&quot;&gt;alice&lt;/code&gt;, and gets the data from the resolver of &lt;code class=&quot;highlighter-rouge&quot;&gt;alice&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;See, there’s no need for Alice to fill up anything new for this account.&lt;/p&gt;
+
+&lt;p&gt;This works also in the opposite direction. If Alice logs into ExampleDAO with the name &lt;code class=&quot;highlighter-rouge&quot;&gt;alice&lt;/code&gt;, then the system follows the link &lt;em&gt;backwards&lt;/em&gt;, recognizes that &lt;code class=&quot;highlighter-rouge&quot;&gt;alice&lt;/code&gt; is also &lt;code class=&quot;highlighter-rouge&quot;&gt;exampledao#alice&lt;/code&gt;, and approves the login attempt.&lt;/p&gt;
+
+&lt;p&gt;That way Alice doesn’t need to manage a new user name, but she can simply use her standard name for this account.&lt;/p&gt;
+
+&lt;p&gt;When does Alice define a new resolver for &lt;code class=&quot;highlighter-rouge&quot;&gt;exampledao#alice&lt;/code&gt;? when she wants to override or expand the resolver of &lt;code class=&quot;highlighter-rouge&quot;&gt;alice&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;There are double benefits to this accounts system.&lt;/p&gt;
+
+&lt;p&gt;On the one hand, it’s super easy for anyone to make accounts for other people in their organization, Daaps, or platforms. On the other hand, people don’t need to get lost in managing all these accounts; their main name is a global account for everything they use in web3.&lt;/p&gt;
+
+&lt;h3 id=&quot;52-reputation&quot;&gt;5.2. Reputation&lt;/h3&gt;
+&lt;p&gt;A link name system can generate a reputation score for names.&lt;/p&gt;
+
+&lt;p&gt;Just think how useful that is. You can screen spammers, bots, or all those things you don’t like, based on their low reputation score. You can trust people you don’t know because they have a high reputation. It will feel so much more comfortable communicating with strangers in a name system that has an internal reputation system in place, right?&lt;/p&gt;
+
+&lt;p&gt;There are several ways to create reputation systems for Woolball. We describe here one method. It’s not necessarily the best one, but it’s one of the simpler ones.&lt;/p&gt;
+
+&lt;p&gt;Reputation is a subjective thing, so there is no such thing as a “perfect reputation system”. The quality of a system is judged differently by different people&lt;/p&gt;
+
+&lt;h4 id=&quot;521-a-simple-reputation-system&quot;&gt;5.2.1. A simple reputation system&lt;/h4&gt;
+&lt;p&gt;First, select a “trust set” of trusted names. This is a crucial step! The better the trust set is (like, the more reliable the names in it are), the more accurate the reputation score will be.&lt;/p&gt;
+
+&lt;p&gt;Each name in the trust set has a perfect reputation score of a 100.&lt;/p&gt;
+
+&lt;p&gt;For each name outside the trust set, calculate how many names in the trust set created a link to this name. Each such link equals a point. If the name has a 100 points (i.e., at least a 100 different names in the trust set have a link to it), we add it to the trust set and recalculate the score of all the other names.&lt;/p&gt;
+
+&lt;p&gt;We can easily extend this method to calculate also reputation points for links between names outside the trust set (but each such link would be worth less than one point). But we save such extensions for a different  article in order to keep the example simple.&lt;/p&gt;
+
+&lt;h3 id=&quot;53-structured-daos&quot;&gt;5.3. Structured DAOs&lt;/h3&gt;
+&lt;p&gt;Many DAOs have some internal structure, with stewards, delegates, secretaries, workgroups, subgroups, etc. See for example ENS DAO and Gitcoin DAO.&lt;/p&gt;
+
+&lt;p&gt;Right now those DAOs need an external tool to make and manage this structure, but with Woolball a structure can be made using the name system itself.&lt;/p&gt;
+
+&lt;p&gt;What if you got three stewards? Just give them all links from the name of the DAO in the style of &lt;code class=&quot;highlighter-rouge&quot;&gt;dao#stewards#steward1&lt;/code&gt;. The same goes for workgroups or any role in the DAO.  It’s also easy to update the rules when people change, you just updated the link!&lt;/p&gt;
+
+&lt;p&gt;Links are a simple way to give role X to the person with the name Y.&lt;/p&gt;
+
+&lt;h2 id=&quot;6-integration-with-other-name-systems&quot;&gt;6. Integration with Other Name Systems&lt;/h2&gt;
+&lt;p&gt;Integration with other name systems on the same blockchain is possible using a name wrapper contract.&lt;/p&gt;
+
+&lt;p&gt;In this case, the name wrapper contract owns the name and provides the regular functionality (create a link, modify a link, etc), but the contract also performs some actions on the other name system.&lt;/p&gt;
+
+&lt;p&gt;For example, when someone asks a name wrapper contract to create a “link to itself”, it also creates a corresponding subdomain in the other name system.&lt;/p&gt;
+
+&lt;h2 id=&quot;7-summary&quot;&gt;7. Summary&lt;/h2&gt;
+&lt;p&gt;There is a lot of attention going into name systems in the last few months. Some of that is hype, but lots of that is because of need.&lt;/p&gt;
+
+&lt;p&gt;Web3 needs a good name system, and we think that the tech existing so far is great, but not perfect yet.&lt;/p&gt;
+
+&lt;p&gt;There’s a path to walk before we get the mature name system Web3 deserves. We hope Woolball is a step in the right direction.&lt;/p&gt;
+
+&lt;p&gt;&lt;img style=&quot; float: right; padding: 20px&quot; src=&quot;/blog/resources/images/woolball/uniwoolball.png&quot; /&gt;&lt;/p&gt;
+&lt;h2 id=&quot;8-acknowledgment&quot;&gt;8. Acknowledgment&lt;/h2&gt;
+&lt;p&gt;There were many people who contributed to turning this article from a strange idea into a complete one. With no particular order, thanks to @zz9, @sshmatrix, @wolfram.eth, and @enspunks. I use the names I know you from Discord since I don’t know the full name of everyone. Thanks goes also to Craig Sailor who doesn’t have a Discord handle.&lt;/p&gt;
+
+&lt;p&gt;Chris Powers gave so many enlighting comments that he deserves a separate thank you. Fabio Saclini gave, as always, too many creative ideas for me to handle, but specifically had the brilliant proposal to represent links with a ‘#’.&lt;/p&gt;
+
+&lt;p&gt;Last but not least, thanks to @tomlightning and @elle from Esteroids who had to suffer me talking about this strange name system for almost 2 weeks.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;(in the picture: Uniwoolball, generated by Fabio Scalini)&lt;/strong&gt;&lt;/p&gt;</content><author><name>Neiman</name></author><category term="Woolball" /><category term="Woolball, Name Systems" /><summary type="html"></summary></entry><entry><title type="html">Community Websites, Tokenized Websites, and WNFTs</title><link href="http://localhost:4000/blog/2021-10-11/community_websites_wnft_tokennized_websites" rel="alternate" type="text/html" title="Community Websites, Tokenized Websites, and WNFTs" /><published>2021-10-11T01:00:33+02:00</published><updated>2021-10-11T01:00:33+02:00</updated><id>http://localhost:4000/blog/2021-10-11/community_websites_wnft_tokennized_websites</id><content type="html" xml:base="http://localhost:4000/blog/2021-10-11/community_websites_wnft_tokennized_websites">&lt;p&gt;&lt;a href=&quot;https://esteroids.eth.limo/#/&quot;&gt;Esteroids&lt;/a&gt; is building a Democratic Website.&lt;/p&gt;
+
+&lt;p&gt;On Esteroids Democratic Website, people are going to be members of the website instead of just users, while decisions will be made by the members in a democratic way.&lt;/p&gt;
+
+&lt;p&gt;Rings a bell, right? We actually bring the democratic state model into the web.&lt;/p&gt;
+
+&lt;p&gt;Our main tool in building Esteroids as Democratic Website is to make it a decentralized website. Not because decentralization is our goal, but because it’s the best tool we know for the job.&lt;/p&gt;
+
+&lt;p&gt;What makes decentralized websites so great is that some kind of websites &lt;strong&gt;can only be built in a decentralized way&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;In this article, we present three types of such websites that &lt;strong&gt;can only exist as decentralized websites&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Community websites.&lt;/li&gt;
+  &lt;li&gt;Tokenized websites.&lt;/li&gt;
+  &lt;li&gt;WNFT (Website NFT)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;What we’re planning to do in Esteroids is to use a combination of these three types to build our Democratic Website. But even if you’re not into “democracy” (good morning to all dictators!), you should keep on reading. These types of websites are usable everywhere.&lt;/p&gt;
+
+&lt;p&gt;The worst we could do is end up cloning the old Internet, let’s see how to avoid this.&lt;/p&gt;
+
+&lt;h2 id=&quot;website-type-1-community-websites&quot;&gt;Website type 1: Community Websites&lt;/h2&gt;
+&lt;p&gt;A community website is a website that is owned by a DAO. That’s it. Practically the DAO owns the name of the website.&lt;/p&gt;
+
+&lt;p&gt;That’s a key difference between decentralized and centralized websites. A DAO can own a decentralized name, but not a centralized one.&lt;/p&gt;
+
+&lt;p&gt;It’s very easy for users of community websites to be members of the website (instead of just users). All they have to do is join as members of the DAO that owns the website.&lt;/p&gt;
+
+&lt;p&gt;A community website can happen in several cases. One is when the website already exists, it has a community, and the community creates a DAO to govern it. That’s Esteroids for you.&lt;/p&gt;
+
+&lt;p&gt;Another case is if the DAO already exists, but it needs an official way to communicate with the outside. The website then acts as the “mouth” of the DAO. If you see something on a community website, you know it must be official data of the DAO.&lt;/p&gt;
+
+&lt;p&gt;It’s clear to many that all DAOs nowadays need a decentralized website, but we also believe that every website with a community needs a DAO to manage it.&lt;/p&gt;
+
+&lt;h2 id=&quot;website-type-2-tokenized-websites&quot;&gt;Website type 2: Tokenized Websites&lt;/h2&gt;
+&lt;p&gt;A tokenized website is a website that has its own (fungible) token. That’s it.&lt;/p&gt;
+
+&lt;p&gt;Tokens are a useful tool, or even sometimes a necessary one, for democratic organizations. Like, a Democratic Website needs to be independent, right? tokens are a powerful tool to achieve that.&lt;/p&gt;
+
+&lt;p&gt;What can a website do with its own token? it can distribute it between early contributors (as a way to track their contribution), or use it as a utility token for payments on the website. It can be used as a governance token, or you can define that revenues are distributed to token holders.&lt;/p&gt;
+
+&lt;p&gt;These are all legitimate usages that will help to keep the democratic website independent.&lt;/p&gt;
+
+&lt;p&gt;How do you create tokenized websites? There are several ways.&lt;/p&gt;
+
+&lt;p&gt;One simple way is to tokenize the ENS name. An ENS name is an NFT, and there are tools that break an NFT into many parts, each of these parts is a token. This method is used by DAO WARS websites.&lt;/p&gt;
+
+&lt;p&gt;Another method is with a combination of community websites. You can create an ERC-20 token of the website, and then give its control to the DAO that owns the website. This ensures that the token is governed while preserving decentralization.&lt;/p&gt;
+
+&lt;h2 id=&quot;website-type-3-wnft-website-nft&quot;&gt;Website type 3: WNFT (Website NFT)&lt;/h2&gt;
+&lt;p&gt;A WNFT is a website where some areas of the website are controlled by an NFT. That’s it.&lt;/p&gt;
+
+&lt;p&gt;Wait wait, is “that it”?! Because WNFT is a much less intuitive concept than the previous two types. So let’s explain it with an example from esteroids.eth.&lt;/p&gt;
+
+&lt;p&gt;Each search result page in Esteroids has an empty box, called a &lt;strong&gt;WNFT box&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img style=&quot;width: 640px; border:1px solid #021a40;&quot; src=&quot;/blog/resources/images/WNFT-community-websites-tokenized-websites/WNFT_boxes.jpeg&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;These WNFT boxes are going to be controlled by NFT tokens, called &lt;strong&gt;WNFT tokens&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Each WNFT token in Esteroids will have a keyword associated to it. The holder of the WNFT token controls the WNFT box of the search result page corresponding to the keyword.&lt;/p&gt;
+
+&lt;p&gt;Want an example? If you hold the WNFT token ‘DAO’, you can do whatever you want with the WNFT box in the search results page for ‘DAO’.&lt;/p&gt;
+
+&lt;p&gt;What can WNFT tokens holders do with their WNFT boxes? Whatever they want! They can present there an NFTs gallery, or show some information about the keyword. They can even build their own business on top of their WNFT boxes! The imagination is their limit.&lt;/p&gt;
+
+&lt;p&gt;WNFTs are important to Democratic Websites for two reasons.&lt;/p&gt;
+
+&lt;p&gt;One is that WNFTs allow the creator of the website to fund development by preselling WNFTs in an early stage of development. This means avoiding investors and preserving the independence of the website.&lt;/p&gt;
+
+&lt;p&gt;But another, even more important, is that WNFTs let members build their own business on top of the democratic website, in the same way, that Ethereum let people build their own business on top of Ethereum, or a state lets you buy a property and build your business on top of it.&lt;/p&gt;
+
+&lt;h3 id=&quot;managing-wnfts&quot;&gt;Managing WNFTS&lt;/h3&gt;
+&lt;p&gt;How do you make sure that WNFT tokens holders don’t use their boxes to destroy the website?&lt;/p&gt;
+
+&lt;p&gt;Why would WNFT tokens holders be sure that no one will ever take their WNFTs from them?&lt;/p&gt;
+
+&lt;p&gt;Answer: just combine the WNFT magic with community websites magic (the first type of website we mentioned) and let the community take care of everything for you.&lt;/p&gt;
+
+&lt;p&gt;In a WNFT community website, the WNFT holders put their trust in the community.&lt;/p&gt;
+
+&lt;p&gt;On the one hand, they trust the community to set and enforce rules of what holders can do with the WNFT boxes (which keeps the quality of the website and the value of the holder’s WNFT box). On the other hand, they trust the community not to touch their own WNFT boxes, as long as they follow the community rules.&lt;/p&gt;
+
+&lt;p&gt;The ideal case is when WNFT tokens holders are actually part of the community so they are influencing those decisions themselves.&lt;/p&gt;
+
+&lt;p&gt;WNFTs is one of the most exciting ideas of decentralized websites in our eyes, showing both which potential it has for new features while demonstrating the power of community websites.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;[This article was originally published in Esteroids blog with small modifications]&lt;/strong&gt;&lt;/p&gt;</content><author><name>Neiman</name></author><category term="SGO" /><category term="WNFT, Community Websites, Tokenized Websites, dWebsites, ENS, IPFS" /><summary type="html">Esteroids is building a Democratic Website.</summary></entry><entry><title type="html">Lessons learned from three months of running a decentralized website</title><link href="http://localhost:4000/blog/2021-06-27/lessons_3_months_running_dwebsite" rel="alternate" type="text/html" title="Lessons learned from three months of running a decentralized website" /><published>2021-06-27T01:00:33+02:00</published><updated>2021-06-27T01:00:33+02:00</updated><id>http://localhost:4000/blog/2021-06-27/lessons_3_months_running_dwebsite</id><content type="html" xml:base="http://localhost:4000/blog/2021-06-27/lessons_3_months_running_dwebsite">&lt;p&gt;It’s been three months since we launched Esteroids Alpha.&lt;/p&gt;
+
+&lt;p&gt;Esteroids Alpha is a decentralized websites (dWebsites) explorer. We are now working on Esteroids Beta, which is going to be search engine for the decentralized web.&lt;/p&gt;
+
+&lt;p&gt;Here are some lessons we studied during this period.&lt;/p&gt;
+
+&lt;p&gt;&lt;img style=&quot;width: 640px; border:1px solid #021a40;&quot; src=&quot;/blog/resources/images/lessons-3-months-running-dwebsite/cover.png&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;people-need-a-dwebsites-explorer&quot;&gt;People need a dWebsites explorer&lt;/h2&gt;
+
+&lt;p&gt;The evidence speaks for itself.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://twitter.com/e_steroids&quot;&gt;Our Twitter&lt;/a&gt; has 300 followers without any promotion.&lt;/li&gt;
+  &lt;li&gt;There are daily visitors coming to see the dWeb in &lt;a href=&quot;https://esteroids.eth.limo/#/&quot;&gt;esteroids.eth&lt;/a&gt;, even though it still has many hiccups and a rough design (remember, it’s alpha!).&lt;/li&gt;
+  &lt;li&gt;Our submision to Hacker News got &lt;a href=&quot;https://news.ycombinator.com/item?id=27551619#27552409&quot;&gt;33 upvotes and 41 comments&lt;/a&gt;. Little known fact: the original link was &lt;a href=&quot;https://twitter.com/e_steroids/status/1405914760017756164&quot;&gt;this&lt;/a&gt;. It was later replaced by the mods to  &lt;a href=&quot;/blog/2020-05-21/Introduction_to_Dwebsitse&quot;&gt;Introduction to dWebsites&lt;/a&gt; post from Almonit blog. Ironically, I wrote both the Esteroids tweet and the Almonit article.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Besides, we talk to people, we get feedback, we see the appetite for a tool to discover the new decentralized web.&lt;/p&gt;
+
+&lt;h2 id=&quot;people-actually-want-a-search-engine-for-the-decentralized-web&quot;&gt;People actually want a search engine for the decentralized web&lt;/h2&gt;
+&lt;p&gt;While people may need a dWebsite browser, but they often tell us they want a search engine.&lt;/p&gt;
+
+&lt;p&gt;Why? guess a search engine is just conceived as a basic tool that thenew Internet needs.&lt;/p&gt;
+
+&lt;p&gt;But no one knows which kind of search engine the decentralized web needs! A google clone? Naaaa, we’re not here to clone the old web.&lt;/p&gt;
+
+&lt;h2 id=&quot;esteroids-beta-version-is-going-to-be-a-search-engine-for-the-decentralized-web&quot;&gt;Esteroids Beta version is going to be a search engine for the decentralized web&lt;/h2&gt;
+
+&lt;p&gt;That’s more an announcement than a lesson really. We see people want a search engine, so we’re gonna give them one soon.&lt;/p&gt;
+
+&lt;p&gt;The search engine will be created in stages, with a few experiments, to figure out what the decentralized web need. If you want to participate in one, write us to contact@esteroids.xyz or DM in Twitter.&lt;/p&gt;
+
+&lt;h2 id=&quot;decentralized-websites-availability-is-a-problem&quot;&gt;Decentralized websites availability is a problem&lt;/h2&gt;
+&lt;p&gt;There are a few popular ways to access dWebsites: browser extensions, Brave and .eth.link gateway.&lt;/p&gt;
+
+&lt;p&gt;None of them works well. They all have downtime, they are all occasionally slow, and psychologically, very few people will visit esteroids.eth if it won’t be reliable and fast.&lt;/p&gt;
+
+&lt;p&gt;However, this seems like a problem with the tools but not with IPFS itself. How do we know? because if a dWebsite points point to an IPFS CID, which is available “since a while” in the network, and is well pinned, then it’s fast and reliable to access it using a native IPFS daemon.&lt;/p&gt;
+
+&lt;p&gt;There is, however, an inherent problem with dWebsites which update often, each time pointing to a different IPFS CID (using IPNS), since it takes time for this CID to become available to everyone fast&lt;/p&gt;
+
+&lt;h2 id=&quot;its-still-hard-to-get-ensipns-right&quot;&gt;It’s (still) hard to get ENS+IPNS right&lt;/h2&gt;
+&lt;p&gt;In April-May we updated the ENS record of esteroids.eth on every change. But a website like Esteroids needs to be updated at least once an hour, so it ends up being super expensive.&lt;/p&gt;
+
+&lt;p&gt;By the end of May, we switched to point esteroids.eth to an IPNS value.&lt;/p&gt;
+
+&lt;p&gt;The difference between IPNS and IPFS is that IPFS links are fixed, but IPNS links can be updated all the time. This means that you just set up your ENS name once (pointing it to IPNS), and then do the IPNS updates for free.&lt;/p&gt;
+
+&lt;p&gt;Boy, did this worked terribly.&lt;/p&gt;
+
+&lt;p&gt;With IPNS, our website may always had the latest data, but it was was available maybe 70% of the time.&lt;/p&gt;
+
+&lt;p&gt;We worked hard to bring the website availability to a “reasonable“ condition, but it’s still not great. So ENS+IPNS is possible, but right now it’ssuper hard to get it right.&lt;/p&gt;
+
+&lt;h2 id=&quot;filecoin-still-doesnt-seem-like-a-solution&quot;&gt;Filecoin (still) doesn’t seem like a solution&lt;/h2&gt;
+&lt;p&gt;It takes up to 24 hours to seal data in Filecoin, so at the moment it doesn’t seem the solution for decentralized websites that need to be updated often, and needs those updates to be available asap.&lt;/p&gt;
+
+&lt;p&gt;We’ll talk about it more soon.&lt;/p&gt;
+
+&lt;h2 id=&quot;brave-is-great-but&quot;&gt;Brave is great (but..)&lt;/h2&gt;
+&lt;p&gt;Brave supports .eth websites natively, and that’s great. What’s even greater, is that it works pretty well! Really, go to brave and type esteroids.eth → works, right?&lt;/p&gt;
+
+&lt;p&gt;So why just “pretty well” instead of “great”? Because Brave uses .eth.link service to resolve .eth. If .eth.link is down, Brave stops resolving .eth website.&lt;/p&gt;
+
+&lt;p&gt;This worry is not theoretical! Just last weekend Brave didn’t work for .eth websites for a few hours for this reason.&lt;/p&gt;
+
+&lt;p&gt;Btw, Brave does resolves .eth websites faster than .eth.link, even though it relies on .eth.link as a service! Magic? no:&lt;/p&gt;
+
+&lt;p&gt;Brave uses .eth.link only to resolve ENS values, but then uses its own internal mechanism to fetch the content from IPFS. Brave mechanism seems faster than .eth.link for the second step, so Brave works faster than .eth.link at this moment.&lt;/p&gt;
+
+&lt;p&gt;How should Brave go to improve its support for .eth websites? Well, we wrote a long article about it last month.&lt;/p&gt;
+
+&lt;h2 id=&quot;dwebsites-are-the-most-exciting-thing-happening-now-on-the-internet&quot;&gt;dWebsites are the most exciting thing happening now on the internet&lt;/h2&gt;
+&lt;p&gt;A few times a week we get this exciting feeling when someone creates an amazing innovative dWebsite. Here are a few examples:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Penguin Swap is an interface for Uniswap.&lt;/li&gt;
+  &lt;li&gt;Penguin Party is a DAO for Penguin Swap.&lt;/li&gt;
+  &lt;li&gt;Ethereans OS is an operating system on top of Ethereum.&lt;/li&gt;
+  &lt;li&gt;The Ethereans OS people also do Covenants , ITEMS and Where is My Dragon?. They are one of the most exciting groups working in this sphere.&lt;/li&gt;
+  &lt;li&gt;Buidlerberg is a conference you find only in the dWeb!&lt;/li&gt;
+  &lt;li&gt;Smoke Signal is a place to publish articles.&lt;/li&gt;
+  &lt;li&gt;Dbuzz is a micro-blogging platform.&lt;/li&gt;
+  &lt;li&gt;Amethyst DAO is Experimental Metaverse Gaming Collective Built on Ethereum.&lt;/li&gt;
+  &lt;li&gt;Omen is a prediction market.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;and so much more.&lt;/p&gt;
+
+&lt;p&gt;Check out esteroids.eth.link every day to see the new websites!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;[This article was originally published in Esteroids blog with small modifications]&lt;/strong&gt;&lt;/p&gt;</content><author><name>Neiman</name></author><category term="SGO" /><category term="Esteroids, ENS, IPFS, dWebsites" /><summary type="html">It’s been three months since we launched Esteroids Alpha.</summary></entry><entry><title type="html">Seven proposals on how can IPFS reach wide adoption</title><link href="http://localhost:4000/blog/2021-06-16/seven_proposals_on_ipfs_wide_adoption" rel="alternate" type="text/html" title="Seven proposals on how can IPFS reach wide adoption" /><published>2021-06-16T01:00:33+02:00</published><updated>2021-06-16T01:00:33+02:00</updated><id>http://localhost:4000/blog/2021-06-16/seven_proposals_on_ipfs_wide_adoption</id><content type="html" xml:base="http://localhost:4000/blog/2021-06-16/seven_proposals_on_ipfs_wide_adoption">&lt;p&gt;&lt;strong&gt;Q&lt;/strong&gt;: What does IPFS need to do in order to reach wide adoption?
+&lt;strong&gt;A&lt;/strong&gt;: We have no purple clue!&lt;/p&gt;
+
+&lt;p&gt;So &lt;a href=&quot;https://www.reddit.com/r/ipfs/comments/ntm85c/what_do_you_think_we_need_to_increase_ipfs/h0wgz3t/?context=3&quot;&gt;we asked the smart people of Reddit&lt;/a&gt;, and got some gooooood feedback in return.&lt;/p&gt;
+
+&lt;p&gt;The proposals raised there can generally be divided into two groups:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;proposals regarding decentralized websites (like ENS+IPFS),&lt;/li&gt;
+  &lt;li&gt;proposals regarding IPFS own features.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;proposals-regarding-dwebsites-decentralized-websites&quot;&gt;Proposals regarding dWebsites (Decentralized Websites)&lt;/h2&gt;
+&lt;p&gt;As you know, &lt;a href=&quot;https://esteroids.eth.limo/#/&quot;&gt;Esteroids&lt;/a&gt; is a hub for dWebsites. We especially like the following proposals.&lt;/p&gt;
+
+&lt;h3 id=&quot;1-more-dynamic-dwebsites&quot;&gt;1. More dynamic dWebsites&lt;/h3&gt;
+
+&lt;p&gt;At first sight, people think dWebsites are like sending a zip file to a friend. But there are actually lots of dynamics possible in dWebsites!&lt;/p&gt;
+
+&lt;p&gt;How? You can use ENS or IPNS to update the dWebsite content, or use IPFS data structure to dynamically fetch content based on user’s actions — or even, you can use the blockchain like a server-side for dynamic content.&lt;/p&gt;
+
+&lt;p&gt;So why did people mentioned they want more dynamic dWebsites? Two reasons.&lt;/p&gt;
+
+&lt;p&gt;First, certain things are trivial for classical websites but are almost impossible, at the moment, for dWebsites. Simple things, like user comments or forums.&lt;/p&gt;
+
+&lt;p&gt;But the second reason, which is what we stress now, is that the limits of dynamic dWebsites are not yet researched.&lt;/p&gt;
+
+&lt;p&gt;Yes, we got some good projects like orbitDB or 3box, but they both need more time to mature, while the community needs much more than two such projects to experiment with dynamic dWebsites.&lt;/p&gt;
+
+&lt;h3 id=&quot;2-add-unique-added-value-our-proposal&quot;&gt;2. Add unique added value (our proposal)&lt;/h3&gt;
+&lt;p&gt;So we talked about dWebsites imitating web 2.0, but how the hell would IPFS attract users by merely imitating what’s already exists?!&lt;/p&gt;
+
+&lt;p&gt;What we need are dWebsites that are dynamic in a way that web 2.0 websites can only dream of. We mean stuff like &lt;a href=&quot;/blog/2021-01-08/self-governing_internet_organizations_part_I&quot;&gt;SGOs&lt;/a&gt;, where users actually own the platform.&lt;/p&gt;
+
+&lt;p&gt;Web 3.0 can offer unique dynamic behavior that stems out of its properties, but it needs people to experiment and buidl frameworks for that.&lt;/p&gt;
+
+&lt;p&gt;It’ll happen soon, we’re also working on such things.&lt;/p&gt;
+
+&lt;h3 id=&quot;3-logins&quot;&gt;3. Logins&lt;/h3&gt;
+&lt;p&gt;As one commenter astutely put it, “IPFS struggles to host a plaintext bulletin board with logins like you’d find in the late 80s”.&lt;/p&gt;
+
+&lt;p&gt;So yup, logins are important. Logins are the way for people to create a consistent online identity, to have continous dialogues, to get others to know them.&lt;/p&gt;
+
+&lt;p&gt;But logins are also a way to authenticate who you are, and to prove that you are the same person who did an action a week ago. This concept is not alien neither to crypto nor to the decentralized world. There are DIDs, self-sovereign identity, or ENS login.&lt;/p&gt;
+
+&lt;p&gt;There are forms of login possible in dWebsites, waiting for someone to implement them.&lt;/p&gt;
+
+&lt;h2 id=&quot;proposals-about-ipfs-own-features&quot;&gt;Proposals About IPFS Own Features&lt;/h2&gt;
+&lt;h3 id=&quot;4-ipfs-library-for-mobile&quot;&gt;4. IPFS library for mobile&lt;/h3&gt;
+
+&lt;p&gt;Well, there is &lt;a href=&quot;https://ipfs-shipyard.github.io/gomobile-ipfs/&quot;&gt;gomobile-ipfs&lt;/a&gt; (we didn’t try it yet though), but people claim it’s not enough.&lt;/p&gt;
+
+&lt;h3 id=&quot;5-statistics-and-analytics&quot;&gt;5. Statistics and analytics&lt;/h3&gt;
+&lt;p&gt;How many people saw your website? How many pin it? How can you know what users like? How can you communicate with visitors?&lt;/p&gt;
+
+&lt;p&gt;Or in other words: how can you get dWebsites analytics without violating users’ privacy? That’s a million-dollar question, we’re sure someone is working on it.&lt;/p&gt;
+
+&lt;h3 id=&quot;6-speed-up-ipns&quot;&gt;6. Speed up IPNS&lt;/h3&gt;
+&lt;p&gt;We switched esteroids.eth.link to IPNS a few weeks ago, and we are kind of happy about it. Why “kind of”? well. as someone in Reddit said, IPNS is slow; it makes a bad first impression on visitors.&lt;/p&gt;
+
+&lt;p&gt;Speeding up IPNS should be a priority of IPFS. We may find out in the end that IPNS is would become more popular than IPFS itself.&lt;/p&gt;
+
+&lt;h3 id=&quot;7-improve-ipfs-pubsub-our-addition&quot;&gt;7. Improve IPFS pubsub (our addition)&lt;/h3&gt;
+
+&lt;p&gt;It’s also connected to the first proposal, “dynamic dWebsites”.&lt;/p&gt;
+
+&lt;p&gt;Pubsub is an experimental IPFS feature letting people create kind-of “chatrooms”.&lt;/p&gt;
+
+&lt;p&gt;The current version requires people to be connected to each other (either directly or indirectly), and if you don’t establish some connection between nodes, messages often get lost.&lt;/p&gt;
+
+&lt;p&gt;For dWebsites to have advanced functionality, IPFS should make it a top priority to speed up pubsub development.&lt;/p&gt;
+
+&lt;p&gt;Pubsub opens up a whole new world of possibilities for dynamic dWebsites, including chatrooms, encrypted chats and a million other options.&lt;/p&gt;
+
+&lt;p&gt;Really, just bring it to maturity, we’ll take care of the innovation.&lt;/p&gt;
+
+&lt;h2 id=&quot;summary&quot;&gt;Summary&lt;/h2&gt;
+&lt;p&gt;We collected seven proposals on how to accelerate IPFS adoption, but there must be dozens more we didn’t mention.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;[This article was originally published in Esteroids blog with small modifications]&lt;/strong&gt;&lt;/p&gt;</content><author><name>Neiman</name></author><category term="SGO" /><category term="dWebsites, IPFS" /><summary type="html">Q: What does IPFS need to do in order to reach wide adoption? A: We have no purple clue!</summary></entry><entry><title type="html">How should browsers integrate decentralized websites?</title><link href="http://localhost:4000/blog/2021-05-26/browsers_integrating_dwebsites" rel="alternate" type="text/html" title="How should browsers integrate decentralized websites?" /><published>2021-05-26T01:00:33+02:00</published><updated>2021-05-26T01:00:33+02:00</updated><id>http://localhost:4000/blog/2021-05-26/browsers_integrating_dwebsites</id><content type="html" xml:base="http://localhost:4000/blog/2021-05-26/browsers_integrating_dwebsites">&lt;p&gt;If you tried recently (May 2021) to access the dWebsite (decentralized website) uniswapexchange.eth using the popular .eth.link gateway (uniswapexchange.eth.link), you got the following message.&lt;/p&gt;
+
+&lt;p&gt;&lt;img style=&quot;width: 640px; border:1px solid #021a40;&quot; src=&quot;/blog/resources/images/browsers-integrating-dwebsites/ethlink_error.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;However, if you used a dWebsites browser extension (&lt;a href=&quot;https://addons.mozilla.org/en-US/firefox/addon/esteroids/&quot;&gt;Esteroids&lt;/a&gt;, for example), you got the more familiar Uniswap interface.&lt;/p&gt;
+
+&lt;p&gt;&lt;img style=&quot;width: 640px; border:1px solid #021a40;&quot; src=&quot;/blog/resources/images/browsers-integrating-dwebsites/unswap.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The gateway .eth.link is &lt;a href=&quot;https://medium.com/the-ethereum-name-service/ens-partners-with-cloudflare-on-improved-eth-link-service-4801bf9148ff&quot;&gt;operated by Cloudflare&lt;/a&gt; since January 2021. For a majority of dWebsites users, those links are the only way they access dWebsites right now.&lt;/p&gt;
+
+&lt;p&gt;Cloudflare blocked uniswapexchange.eth in order to avoid confusion since it’s not Uniswap official link (uniswap.eth is). While their decision is reasonable, it does show how fast can the dWebsites ecosphere runs into centralization.&lt;/p&gt;
+
+&lt;p&gt;There are those who say that this situation will be solved once the main browsers integrate native support for dWebsites, but would it really? If browsers would implement it, let’s say, by taking all the data from Cloudflare, would it solve anything?&lt;/p&gt;
+
+&lt;p&gt;There were 23 dWebsites when Almonit launched its directory in September 2019. A year and a half later the number is almost 1000. At this rate next year it will likely exceed 10K, and the year after that a 100K. At some point we’ll reach the 1 million dWebsites mark, and who knows where it will stop?&lt;/p&gt;
+
+&lt;p&gt;Inevitably, the major browsers will add native support for dWebsites. There are already buds of it in Opera and Brave browsers (and other). But it won’t be easy for them to integrate dWebsites without breaking what makes them unique.&lt;/p&gt;
+
+&lt;p&gt;We are here to help them.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Disclaimer&lt;/strong&gt;. While this article focuses on ENS+IPFS dWebsites, a lot of what’s written here is true, with minor modifications, for other kinds of dWebsites, like those based on Unstoppable domains, Swarm, Handshake, or Skynet.&lt;/p&gt;
+
+&lt;h2 id=&quot;desired-properties&quot;&gt;Desired properties&lt;/h2&gt;
+&lt;p&gt;We want to use dWebsites in a way that is private, decentralized, and reliable.&lt;/p&gt;
+
+&lt;p&gt;Privacy is when as few entities as possible know you visited a dWebsite. If the number is zero it’s called “anonymity”, but we won’t insist on it.&lt;/p&gt;
+
+&lt;p&gt;Decentralization is when different people get data from different sources. If most people get the data from one entity, it gives this entity too much power, enabling it to eventually set its own standards for the field (cf., Google with Gmail or Chrome).&lt;/p&gt;
+
+&lt;p&gt;Reliability is when you know that you get the correct data, instead of, for example, instructions for planting cucumbers when you try to access uniswap.eth (though it would make a good April’s fool day joke).&lt;/p&gt;
+
+&lt;h2 id=&quot;how-dns-works&quot;&gt;How DNS works?&lt;/h2&gt;
+
+&lt;p&gt;To avoid reinventing the wheel, let’s see how things similar to dWebsites are used in browsers, for example, DNS.&lt;/p&gt;
+
+&lt;p&gt;Browsers don’t implement DNS by themselves, nope. They let the operation system (OS) do that. What browsers do is using the DNS API provided to them by the OS.&lt;/p&gt;
+
+&lt;p&gt;The OS in turn queries a DNS service (one or more, though normally one). By default, it queries the DNS service of your Internet provider, but since these have been either unreliable or violating people’s privacy in the past, many switched to Google DNS service (8.8.8.8) which is reliable, or Cloudfair (1.1.1.1) which is privacy-preserving.&lt;/p&gt;
+
+&lt;p&gt;Can you run your own DNS service? Yes, you can! But it’s uncommon with &lt;a href=&quot;https://serverfault.com/questions/118020/running-a-recursive-dns-server-on-localhost&quot;&gt;plenty of reasons why not to do that&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Is it reasonable to request from the OS to provide similar ENS and IPFS APIs? Yes and no.&lt;/p&gt;
+
+&lt;p&gt;The OS supplies DNS API because the browser is not the only application using DNS. Almost every app uses DNS nowadays, so it makes sense for the OS to supply it. This “truth” goes also for Ethereum and IPFS. It’s not only browsers that supposed to use them, but potentially many other apps in the future.&lt;/p&gt;
+
+&lt;p&gt;On the other hand, the OS can supply DNS API because there is only one main DNS system. However, there are many blockchains and many decentralized file systems (sorry Bitcoin and Ethereum maximalist!), and we can’t expect OS devs to support all of them. They are busy people; they have an OS to write after all.&lt;/p&gt;
+
+&lt;p&gt;To complicate things further, many browsers started supporting, some even by default, DNS-over-HTTPS (or even better, Oblivious DNS-over-HTTPS). In this method, browsers use the operating system DNS much less and mostly resolve DNS requests on their own.&lt;/p&gt;
+
+&lt;h2 id=&quot;how-to-support-ens--ipfs-dwebsites&quot;&gt;How to support ENS + IPFS dWebsites?&lt;/h2&gt;
+
+&lt;p&gt;Whether the OS supports ENS and IPFS, or the browsers themselves implement it, at some point someone will need to do that. Let’s discuss how.&lt;/p&gt;
+
+&lt;p&gt;In general, browsers require two steps to resolve ENS+IPFS dWebsites. First they retrieve the value of an ENS name from the Ethereum blockchain (like, esteroids.eth). Then they fetch the relevant contents from IPFS.&lt;/p&gt;
+
+&lt;p&gt;We will discuss these two steps in reverse order to reflect the level of difficulty required, beginning with IPFS.&lt;/p&gt;
+
+&lt;h2 id=&quot;getting-data-from-ipfs&quot;&gt;Getting data from IPFS&lt;/h2&gt;
+&lt;p&gt;Two browsers (Brave and Opera), and a handful of browser extensions (Almonit, Unstoppable Domains, Metamask) already support IPFS websites. We have plenty of practice to base our proposal on.&lt;/p&gt;
+
+&lt;h3 id=&quot;what-do-tools-do-so-far&quot;&gt;What do tools do so far?&lt;/h3&gt;
+&lt;p&gt;Let’s face it, the best way of using IPFS is to run a go-ipfs daemon on your machine. The browser then simply queries the IPFS daemon for information. That’s what the IPFS companion addon does, and Brave already includes it natively.&lt;/p&gt;
+
+&lt;p&gt;While this way is a decentralized and reliable way, it is not very private (because IPFS is a peer-to-peer network that is not very private). What’s worse, you can’t run go-ipfs on your phone (it’ll drain the battery) or on weak networks (it’ll jam them). I personally brought down the Internet of many good cafes and hotels over the last few years by running the go-ipfs daemon.&lt;/p&gt;
+
+&lt;p&gt;For people who don’t want to run go-ipfs themselves, there are easier browser solutions. Brave, for example, lets you install go-ipfs node in the browser (they reported &lt;a href=&quot;https://twitter.com/brianbondy/status/1372937229002215428&quot;&gt;over 50K installations in 60 days&lt;/a&gt;), while Unstoppable Domains browser extension does a similar thing with js-ipfs. It has exactly the same pros and cons as installing go-ipfs yourself.&lt;/p&gt;
+
+&lt;p&gt;But probably the most popular option for using IPFS is gateways. This means that each of your IPFS requests is redirected to some IPFS gateway. Brave does that, and so do Esteroids, Unstoppable Domain, and Metamask browser extensions.&lt;/p&gt;
+
+&lt;p&gt;This way preserves privacy (only the gateway maintainer knows where you surfed). However, it contains many (many!) risks. What if all the tools redirect to one gateway? We would lose decentralization. This already happens now where many tools just redirect to dweb.link gateway. Additionally, there’s the issue that the data you get from the gateway is not being authenticated.&lt;/p&gt;
+
+&lt;h3 id=&quot;how-tools-should-use-ipfs&quot;&gt;How tools should use IPFS?&lt;/h3&gt;
+
+&lt;p&gt;We make four calls to action for the IPFS ecosphere&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Create a “smart” IPFS daemon&lt;/strong&gt;. This daemon will adjust how it works based on the device and network it runs on. On a strong network and computer, it will act as it does right now, but on a weak network it may choose a low number of peers, and on weak devices, it will redirect to gateways.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Gateway selection: decentralization by randomization&lt;/strong&gt;. A different gateway will be chosen for each session in order to prevent centralization. The level of decentralization can be calculated using the &lt;a href=&quot;https://en.wikipedia.org/wiki/Balls_into_bins_problem&quot;&gt;Balls into bins&lt;/a&gt; problem calculations. This method is already implemented in Esteroids Browser Extension.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;A business model for gateways&lt;/strong&gt;. There is no common business model for establishing and maintaining gateways yet. As it is obvious the dWeb can’t rely on philanthropic gateway maintainers for the long run, the community should work together to come up with ideas for the gateways business model. Skynet is working in this direction over the last few months.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;DAOs, such as DXdao, should run their own IPFS gateway. This can be either for the public benefit or for their members based on a subscription model.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;getting-data-from-ethereum&quot;&gt;Getting data from Ethereum&lt;/h2&gt;
+
+&lt;p&gt;To use ENS you need to get data from the Ethereum blockchain. Well, there’s bad and good news about that.&lt;/p&gt;
+
+&lt;p&gt;The bad news: If you thought using IPFS is hard, using Ethereum is sevenfold harder.&lt;/p&gt;
+
+&lt;p&gt;But there is (kind of) good news! It’s not only a problem of the small dWebsites ecosphere, but of all the huge, rich, resourceful Ethereum ecosphere. With a bigger userbase comes greater resources dedicated to solving problems.&lt;/p&gt;
+
+&lt;h3 id=&quot;what-do-tools-do-so-far-1&quot;&gt;What do tools do so far?&lt;/h3&gt;
+&lt;p&gt;The best way to use Ethereum is, once again, to run an Ethereum client locally and have the browser querying it. That’s a decentralized, reliable, and even private solution. Perfect!&lt;/p&gt;
+
+&lt;p&gt;However, it’s also veeeery hard to do, since Ethereum clients eat your resources like it was a bar of tasty Belgian chocolate.&lt;/p&gt;
+
+&lt;p&gt;You can, alternatively, run a client on some external device or server. But that’s expensive! It requires knowledge, requires configuring the browser to use it. Not exactly a solution for muggles like myself.&lt;/p&gt;
+
+&lt;p&gt;Can browsers run Ethereum clients themselves (like what Brave does with go-ipfs clients)? No, that’s too complex.&lt;/p&gt;
+
+&lt;p&gt;So what everyone ends up doing, and I mean everyone, is using “some” gateway. By “some” gateway I mean obviously “an Infura gateway” (though we don’t really know what Brave uses to be honest). Is this good for decentralization, censorship resistance, privacy, and reliability? You know the answer yourself already.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;side note&lt;/strong&gt;. L2, side-chains, and Ethereum 2.0 do not seem to improve this situation much.&lt;/p&gt;
+
+&lt;h3 id=&quot;how-tools-should-use-ethereumens&quot;&gt;How tools should use Ethereum/ENS?&lt;/h3&gt;
+&lt;p&gt;Let’s face it, most Ethereum users are not going to run their own Ethereum clients in the near future. In light of this, we make 4 proposals, similar in spirit to our proposals for IPFS.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Create Web3 provider business model to increase the number of gateways. The community should come up with a business model for Web3 providers. This can be either be in the protocol level (paying web3 providers like you pay miners) or by a more traditional business model.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Ethereum community and DAOs should create their own web3 service. If not public ones, then at least as a service for their own members.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Decentralization via randomization method for Web3 providers. see IPFS proposals, item 2.
+ Accelerate development of light clients. How do users verify the data received from web3 providers? Right now they don’t. &lt;a href=&quot;https://eth.wiki/en/concepts/light-client-protocol&quot;&gt;Light clients&lt;/a&gt; suppose to enable it.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;proposal-certificate-of-decentralization&quot;&gt;Proposal: certificate of decentralization&lt;/h2&gt;
+
+&lt;p&gt;The road for browser integration of dWebsites is a long and difficult one. It requires the involvement of many different players doing many different steps. Until that happens, we are going to see many hybrid solutions, or many great ideas this article did not think of.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;The certificate of decentralization&lt;/strong&gt; should be awarded on an ongoing basis by a coalition of DAOs in the blockchain space. This would give users an indication of how good is a current implementation of a product.&lt;/p&gt;
+
+&lt;p&gt;Such a certificate should be awarded for general blockchain products, not only to ones related to dWebsites.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;[This article was originally published in Esteroids blog with small modifications]&lt;/strong&gt;&lt;/p&gt;</content><author><name>Neiman</name></author><category term="SGO" /><category term="dWebsites, ENS, IPFS, Brave" /><summary type="html">If you tried recently (May 2021) to access the dWebsite (decentralized website) uniswapexchange.eth using the popular .eth.link gateway (uniswapexchange.eth.link), you got the following message.</summary></entry><entry><title type="html">Introducing Esteroids</title><link href="http://localhost:4000/blog/2021-05-13/introducing_esteroids" rel="alternate" type="text/html" title="Introducing Esteroids" /><published>2021-05-13T01:00:33+02:00</published><updated>2021-05-13T01:00:33+02:00</updated><id>http://localhost:4000/blog/2021-05-13/introducing_esteroids</id><content type="html" xml:base="http://localhost:4000/blog/2021-05-13/introducing_esteroids">&lt;p&gt;Three weeks ago we launched &lt;a href=&quot;https://esteroids.eth.limo/&quot;&gt;Esteroids Alpha version&lt;/a&gt;. It was not an alpha per se really, more like a proof-of-concept.&lt;/p&gt;
+
+&lt;p&gt;&lt;img style=&quot;width: 640px; border:1px solid #021a40;&quot; src=&quot;/blog/resources/images/introducing-esteroids/alpha_snapshot.png&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;what-is-esteroids&quot;&gt;What is Esteroids?&lt;/h2&gt;
+
+&lt;p&gt;Esteroids (pronounced like “Asteroids”, but with an “e”) is a dWebsites explorer. Think of Etherscan, just for the dWeb.&lt;/p&gt;
+
+&lt;p&gt;We built Esteroids because we think the dWeb needs dedicated tools to explore it. Tools that don’t simply copy web 2.0, but rather build on top of the strength the decentralized websites technology offers.&lt;/p&gt;
+
+&lt;p&gt;We launched a showcase of what we can do. We can collects, analyze, and show all the existing data about decentralized websites. But honsetly, we are still trying to find out what the community wants us to do with this data.&lt;/p&gt;
+
+&lt;p&gt;At the same time, we also activate a Twitter bot. It runs in our Twitter account (follow us!), tweeting each new dWebsites as it’s created.&lt;/p&gt;
+
+&lt;h2 id=&quot;response&quot;&gt;Response&lt;/h2&gt;
+&lt;p&gt;We did ge-n-t-le marketing, after all, no need to be too loud when we simply dip our toes in the water, looking how to move forward.&lt;/p&gt;
+
+&lt;p&gt;The response was surprisingly good! 20 upvotes in two small Reddit groups (/r/ethdev and /r/ipfs), healthy discussion, a 130 Twitter followers popping out of nowhere. We got a signal, though weak, that we’re on the right path.&lt;/p&gt;
+
+&lt;h2 id=&quot;future&quot;&gt;Future&lt;/h2&gt;
+&lt;p&gt;While we still don’t know exactly how a dWebsites explorer should look like, we do know two things. One, it needs to be fast. Two, it should use the special features decentralized websites enable.&lt;/p&gt;
+
+&lt;p&gt;For the first one, we gonna launch an ENS+IPNS version of Esteroids next week. That way you always know you get the most recent news and data.&lt;/p&gt;
+
+&lt;p&gt;For the second? Oh, we got a few ideas, all of them are super innovative, stuff which was never tried before (we promise!). But you will have to wait 2–3 weeks to see the first of them.&lt;/p&gt;
+
+&lt;p&gt;Esteroids started a new journey for us, we’re still curious where would it take us.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;[This article was originally published in Esteroids blog with small modifications]&lt;/strong&gt;&lt;/p&gt;</content><author><name>Neiman</name></author><category term="Esteroids" /><category term="Esteroids" /><summary type="html">Three weeks ago we launched Esteroids Alpha version. It was not an alpha per se really, more like a proof-of-concept.</summary></entry><entry><title type="html">The Self-Governing Internet Organizations Manifest (Part II)</title><link href="http://localhost:4000/blog/2021-01-10/self-governing_internet_organizations_part_II" rel="alternate" type="text/html" title="The Self-Governing Internet Organizations Manifest (Part II)" /><published>2021-01-10T00:00:33+01:00</published><updated>2021-01-10T00:00:33+01:00</updated><id>http://localhost:4000/blog/2021-01-10/self-governing_internet_organizations_part_II</id><content type="html" xml:base="http://localhost:4000/blog/2021-01-10/self-governing_internet_organizations_part_II">&lt;p&gt;Self-governing Internet organizations (SGOs) are online organizations which are owned and controlled by their own users.&lt;/p&gt;
+
+&lt;p&gt;In &lt;a href=&quot;/blog/2021-01-08/self-governing_internet_organizations_part_I&quot;&gt;Part I of this article&lt;/a&gt; we laid the philosophical principles that undermine SGOs, while this part is about their technical implementation. Specifically, we suggest implementing SGOs using DAOs, and discuss the pros, cons, possibilities and limitations of DAOs.&lt;/p&gt;
+
+&lt;h2 id=&quot;daos-or-how-to-build-self-governing-internet-organizations&quot;&gt;DAOs, or how to build self-governing Internet organizations?&lt;/h2&gt;
+&lt;p&gt;While it is easy to call for the establishment of SGOs, how to build them is another question. The current legal framework is not exactly designed for global, international dynamic organizations like this.&lt;/p&gt;
+
+&lt;p&gt;The solution we propose here is a tool for Internet organizations called “DAO”.&lt;/p&gt;
+
+&lt;p&gt;DAOs were invented during the 2010s and were used in more than a few Internet organizations in the last few years, such as Metacartel, MolochDAO, MakerDAO, dxDAO, and many others.&lt;/p&gt;
+
+&lt;p&gt;We suggest to take this tool, already existing, and use it for creating SGOs.&lt;/p&gt;
+
+&lt;p&gt;The rest of this article focuses on what is a DAO, and which kind of organizations can be built using it?&lt;/p&gt;
+
+&lt;h3 id=&quot;part-i-dao-introductions&quot;&gt;Part I: DAO introductions&lt;/h3&gt;
+&lt;p&gt;A DAO, Decentralized Autonomous Organization, is a programmable organization.&lt;/p&gt;
+
+&lt;p&gt;DAOs are described by computer code (instead of by legal language) and are registered on a blockchain (instead of with a state). The latter step is what puts the “decentralized” and “autonomous” word in its name.&lt;/p&gt;
+
+&lt;p&gt;While you need a lawyer to implement a classical organization, you need a programmer to implement a DAO. This approach has both pros and cons.&lt;/p&gt;
+
+&lt;p&gt;The pros are that everyone is equal in front of the code, while the code also allows dynamic fast changes in the organization. DAOs easily enables International organizations because code doesn’t care who you are or where you are, and allows for organizations to develop quickly.&lt;/p&gt;
+
+&lt;p&gt;Cons? A programming language might be a bit &lt;em&gt;too strict&lt;/em&gt; for human agreements. While legal contracts describe organizations accurately, they always leave space for human interpretations. This is more difficult to achieve with code.&lt;/p&gt;
+
+&lt;p&gt;Are you familiar with the common legal phrase “reasonable time”? How would you write such phrases in code? How would the blockchain, operating the DAO, would be able to assess “reasonable time”? Enabling such phrases is important, otherwise, we’re at the risk of entering a state of “code is law” or “automated justice”, not exactly what we want for human organizations.&lt;/p&gt;
+
+&lt;p&gt;DAOs solve this issue by accurately specifying, in the code, which parts can be assessed automatically by the blockchain, and which parts need to be assessed, including how the assessment happens, by outside entities.&lt;/p&gt;
+
+&lt;p&gt;In the case of “reasonable time”, the code might specify, for example, that what is “reasonable time” is assessed by three members of the DAO, and that they assess it by majority voting (if 2 of them vote that a reasonable time has passed, then indeed, a reasonable time has passed).&lt;/p&gt;
+
+&lt;p&gt;You can easily elaborate on this method for more advanced structures. For example, letting the whole organization decide on such a matter (democracy), asking outside organizations to decide (arbitration), or even let outside institutes make assessments of those topics (Internet court system).&lt;/p&gt;
+
+&lt;p&gt;There are plenty of other DAO-related topics to discuss. What are the best practices in designing a DAO? What is the members’ liability for the DAO actions?&lt;/p&gt;
+
+&lt;p&gt;But we rather focus on practicality, so instead of discussing those questions, let’s take a look at what DAOs can already do very well, and what DAOs might do very well in the near future. These things dictate which kind of SGOs can be implemented using a DAO.&lt;/p&gt;
+
+&lt;h3 id=&quot;part-ii-daos-state-of-the-art&quot;&gt;Part II: DAOs, state of the art&lt;/h3&gt;
+&lt;p&gt;To see what an organization based on a DAO can do, let’s examine which kind of techniques are used nowadays in DAOs. These techniques belong to one of five categories.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Controlling crypto assets&lt;/strong&gt;. DAOs are ideal for managing things like crypto tokens, decentralized names, or other NFTs (non-fungible tokens).&lt;/p&gt;
+
+    &lt;p&gt;The basic example is when DAO members collect a large number of cryptocurrencies together and manage these funds via voting.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Registries&lt;/strong&gt;. Registries are a collection of records, containing information that was agreed upon by some community. For example, the state property registry contains information of which property belongs to who, as agreed by the citizens of the states.&lt;/p&gt;
+
+    &lt;p&gt;DAOs are a very good tool for creating and maintaining registries, showing which data DAO members agree on.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Staking&lt;/strong&gt;. Staking is a method to ensure DAOs against the misbehaviour of members. Staking is used mostly with members holding a position of trust.&lt;/p&gt;
+
+    &lt;p&gt;In staking, a member transfers some funds (called, “stake”) to the DAO. The DAO holds the funds as long as the member holds the position on trust. If the member betrays the trust, the DAO members can decide to confiscate some, or all, of the stake. The stake is returned to the member once the position of trust is relinquished.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;External blockchain services&lt;/strong&gt;. DAOs can use services of other DAOs running on the same blockchain.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;External non-blockchain services&lt;/strong&gt;. DAOs can use services provided by third parties outside the blockchain, under the principle that those services should be interoperable and replaceable to minimize dependencies on the third party.&lt;/p&gt;
+
+    &lt;p&gt;An example of this when a DAO pays a third party to maintain full nodes of the blockchain it is registered on.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;part-iii-the-possible-future-of-daos&quot;&gt;Part III: The possible future of DAOs&lt;/h3&gt;
+&lt;p&gt;While the previous section was practical (it contained actions DAOs already take nowadays), this action is pure speculation, hence “wilder”.&lt;/p&gt;
+
+&lt;p&gt;It is almost a science fiction section, not a prediction. Take what’s written here as possibilities for what DAOs may do in the future, treat them with a grain of salt.&lt;/p&gt;
+
+&lt;p&gt;We present each possibility in form of a change that needs to happen, and what it would enable for DAOs.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Changes giving new options for DAO.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Services for DAOs.&lt;/strong&gt; In the same way that services, any kind of services, are being offered to companies, they could also be offered to DAOs. Some such services would be: social media accounts for DAOs, through cloud computing, and food deliveries.&lt;/p&gt;
+
+    &lt;p&gt;Such services should offer login for DAOs, and be able to communicate with the DAO to know which members have access to the service at any given time.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;Changes letting DAOs be used for any kind of organization, from Google to Amazon.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Creation a legal framework for DAOs&lt;/strong&gt;. For some people, a legal framework recognizing a DAO as a legal entity is the ultimate goal. With it, DAOs could do anything a traditional organization can do.&lt;/p&gt;
+
+    &lt;p&gt;Is it possible to create such a legal framework without destroying the fundamental aspects that make DAOs so special? Could we still have inclusive DAOs, where members can be from anywhere in the world, while their location and national identity have no effect - or even unknown - to the other members of the organization?&lt;/p&gt;
+
+    &lt;p&gt;If a DAO is recognized by a legal system of a specific state, it may violate the “Members equality” principle of self-governing Internet organizations (&lt;a href=&quot;/blog/2021-01-08/self-governing_internet_organizations_part_I&quot;&gt;see here&lt;/a&gt;), since it would create an advantage for people located in that specific state. Recognizing DAOs as International organizations may assist in that, but this privilege is reserved, at the moment, only for unique entities, such as the UN.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Imitating the legal framework (“World of DAOs”)&lt;/strong&gt;. Our legal framework can be thought of as a hierarchical structure of legal entities.&lt;/p&gt;
+
+    &lt;p&gt;At the top of the hierarchy, there are UN organizations and states (each state is a legal entity, while together they form the UN legal entity). On lower levels, there are legal entities (organizations) and human entities recognized by some state. Each organization is further composed of other legal entities (either human entities or other organizations).&lt;/p&gt;
+
+    &lt;p&gt;This hierarchical structure can be directly copied by DAOs. A few big DAOs will be equivalent to states, together they will form the “UD” (united DAOs). Each DAO would be able to give a DAO “legal status” to other smaller DAOs, or to “Internet entities” (the Internet equivalent to human entities).&lt;/p&gt;
+
+    &lt;p&gt;This structure gives DAOs much more power in governing its members and members of other DAOs, introducing many new capabilities.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;The following change would create a clear, moral Darknet&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Darknet becomes a DAO&lt;/strong&gt;. The darknet gained a bad reputation, possibly justified, due to its absolute lack of governance. If Tor transforms itself into a self-governing Internet organization in the form of the DAO, where the members are darknet users (that can remain anonymous), then this DAO could moderate the Darknet, blocking bad actors from it, while keeping Tor famous privacy features.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;The following change will create a terrible dark spin on DAOs&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Used by crime organizations&lt;/strong&gt;. This is sadly a very probable option. Crime organizations already function outside the legal system, so they could benefit from switching to a DAO model.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;The following change will create space DAOs!&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Human settlement of other planets&lt;/strong&gt;. Once humans start settling on other planets, enforcing powers of the inter-planetary legal system becomes quite limited. But DAOs come to the rescue, offering a space legal system enhanced with cryptography!&lt;/p&gt;
+
+    &lt;p&gt;Yes, we are joking, we told you it’s a science fiction section.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;call-for-action&quot;&gt;Call for action&lt;/h2&gt;
+&lt;p&gt;If you got hooked on the idea of self-governing Internet organizations and DAOs, you should either join Almonit’s Alpress project in the effort to create one or consider it for your projects.&lt;/p&gt;
+
+&lt;p&gt;To join Almonit follow us &lt;a href=&quot;https://twitter.com/GoAlmonit&quot;&gt;on Twitter&lt;/a&gt;, join &lt;a href=&quot;https://t.co/Z79kgx8noD?amp=1&quot;&gt;our Telegram group&lt;/a&gt;, or drop us an email (contact@almonit.club) to get involved in the project.&lt;/p&gt;
+
+&lt;p&gt;To consider it for your project, check out existing DAOs frameworks such as DAOStack or Aragon, or consider programming your DAO if you want your design.&lt;/p&gt;
+
+&lt;h2 id=&quot;summary&quot;&gt;Summary&lt;/h2&gt;
+&lt;p&gt;Digital life is real life, and it’s hard to imagine a future where big tech keeps on controlling it. The idea of people governing their social structures is too strong in society at this point in history.&lt;/p&gt;
+
+&lt;p&gt;Everything is ready for self-governing Internet organizations to make their stand.&lt;/p&gt;
+
+&lt;h2 id=&quot;acknowledgement&quot;&gt;Acknowledgement&lt;/h2&gt;
+&lt;p&gt;Thanks to Krzysztof Lewosz, Muhammed Tanrıkulu, Eylon Aviv, and Craig Sailor for participating in the preparation of this article.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;[This article was originally published in Almonit blog with small modifications]&lt;/strong&gt;&lt;/p&gt;</content><author><name>Neiman</name></author><category term="SGO" /><category term="SGO" /><summary type="html">Self-governing Internet organizations (SGOs) are online organizations which are owned and controlled by their own users.</summary></entry><entry><title type="html">The Self-Governing Internet Organizations Manifest (Part I)</title><link href="http://localhost:4000/blog/2021-01-08/self-governing_internet_organizations_part_I" rel="alternate" type="text/html" title="The Self-Governing Internet Organizations Manifest (Part I)" /><published>2021-01-08T00:00:33+01:00</published><updated>2021-01-08T00:00:33+01:00</updated><id>http://localhost:4000/blog/2021-01-08/self-governing_internet_organizations_part_I</id><content type="html" xml:base="http://localhost:4000/blog/2021-01-08/self-governing_internet_organizations_part_I">&lt;p&gt;If there was any doubt before, COVID-19 made it clear: &lt;em&gt;digital life is real life&lt;/em&gt;.  Our lives exist on the Internet no less so than on the streets. But while we control the streets (via the state), the Internet is made of centralized platforms controlled by commercial corporates.&lt;/p&gt;
+
+&lt;p&gt;If digital life is real life, with the internet acting as an integral part of our social structure, we should control it rather than be controlled by it.&lt;/p&gt;
+
+&lt;p&gt;This article presents self-governing Internet organizations (SGOs): digital organizations that are owned and governed by their users. We suggest SGOs as an alternative to commercial control of the internet.&lt;/p&gt;
+
+&lt;p&gt;SGOs are an idea that brings democratic states forward into the digital age. Their technical implementation has been made possible by developments in the blockchain movement over the last decade.&lt;/p&gt;
+
+&lt;p&gt;The unique value of SGOs is “power to the people of the Internet”. No more power to rich owners, just let the people of the Internet rule themselves.&lt;/p&gt;
+
+&lt;p&gt;Part I lays the philosophical foundations for SGOs, while &lt;a href=&quot;/blog/2021-01-10/self-governing_internet_organizations_part_II&quot;&gt;Part II&lt;/a&gt; discusses the technical implementation.&lt;/p&gt;
+
+&lt;h2 id=&quot;challenges&quot;&gt;Challenges&lt;/h2&gt;
+&lt;p&gt;First, to clarify, “governing” means in all aspects of the organization. From moderating content to monetizing its products. Users own these SGOs organizations in all possible meanings.&lt;/p&gt;
+
+&lt;p&gt;For example, cooperatives are SGOs, but they are normally governed by the workers rather than their users (or customers). Democratic states are another example of SGOs (since they are governed by their citizens), but they are not digital.&lt;/p&gt;
+
+&lt;p&gt;Those two unique properties, being governed by the users and being digital, make it difficult to create SGOs.&lt;/p&gt;
+
+&lt;p&gt;It is difficult to create an organization governed by its users, because who &lt;em&gt;exactly&lt;/em&gt; are those users? Is anyone who used a project of the organization once is a “user” (with voting rights)? Are users only paying customers? Or maybe “users” is a more broad term, that includes also developers, maintainers, managers, and investors?&lt;/p&gt;
+
+&lt;p&gt;It is difficult to create self-governing organizations, since how can they be self-governed without using a third party? also, if a third party is involved, is it still governed by the users or rather by this party? It’s easier for a group of people to manage a self-governing organization in real life, but a digital one is challenging.&lt;/p&gt;
+
+&lt;p&gt;There’s no algorithm for designing an SGO. It is, after all, a human community, and each human community should be designed independently, to fit the unique spirit of its human members.&lt;/p&gt;
+
+&lt;p&gt;Listed below are general principles SGOs should follow in order to be digital self-governing organizations. Part II of this article would describe the technical tools to implement SGOs that follow these principles.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-ten-principles-of-self-governing-internet-organizations&quot;&gt;The ten principles of self-governing Internet organizations&lt;/h2&gt;
+&lt;p&gt;The “Rochdale Society of Equitable Pioneers”, an early cooperative, opened its store on 21 December 1844. The 28 founders were skilled workers, pushed into poverty by the industrial revolution.&lt;/p&gt;
+
+&lt;p&gt;The Rochdale society was not the first cooperative in history. There were a few hundred failed attempts in creating cooperatives before that. But it was the first cooperative that succeeded. The Rochdale society created “Rochdale Principles” based on the previous failed attempts. Following those principles, they managed to create a successful cooperative.&lt;/p&gt;
+
+&lt;p&gt;Inspired by the “Rochdale Principles”, we create a set of principles for SGOs. Our principles are based on many examples of Internet platforms and blockchain organizations from the 21st century. Principles 3, 4, 6, and 7 are adapted from Rochdale principles themselves.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Users first/prioritizing users&lt;/strong&gt;. the SGO’s main priority is benefiting its users. All decisions are taken under the constraint that they either benefit or otherwise do not harm, the users.&lt;/p&gt;
+
+    &lt;p&gt;&lt;em&gt;Two assumptions underlie this principle&lt;/em&gt;:&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;An organization with enough users has myriad monetizing opportunities, meaning there is no bankruptcy risk in prioritizing users.&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;There would be no need for SGOs if commercial Internet organizations would prioritize their users first.&lt;/em&gt;
+ &lt;br /&gt; &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Users are members&lt;/strong&gt;. Members of an SGO are its own users. If further non-users members exist they should come from all parties of interest in the organization, e.g., contributors, investors, advertisers, etc.&lt;/p&gt;
+
+    &lt;p&gt;&lt;em&gt;This principle differentiates SGOs from worker cooperatives (where only contributors are members) and consumers’ cooperatives (where only users are members).&lt;/em&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Voluntary and open membership&lt;/strong&gt;. SGOs are voluntary organizations, open to all persons able to use their services and willing to accept the responsibilities of membership, without nationality, geographically, gender, social, racial, political, or religious discrimination.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Democratic member control&lt;/strong&gt;. SGOs are democratic organizations controlled by their members, who actively participate in setting their policies and making decisions.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Members equality: one member one vote&lt;/strong&gt;. All members have equal influence, without nationality, geographically, gender, social, racial, political, or religious discrimination. One full member gets one vote.&lt;/p&gt;
+
+    &lt;p&gt;However, due to the dynamic nature of the internet, it may take time to become a full member (with an equal vote). Partial members have a partial vote, but it must be that each partial member becomes a full member given enough time has elapsed (the exact period of time may vary from one member to another, but must be pre-defined when the member joins).&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Autonomy and independence&lt;/strong&gt;. SGOs are autonomous organizations controlled by their members. If they enter into agreements with other organizations, including governments, or raise capital from external sources, they do so on terms that ensure democratic control by their members and maintain their autonomy.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Cooperation among SGOs&lt;/strong&gt;. SGOs serve their members most effectively and strengthen the self-governing movement by working together to create bigger self-governing digital social structures.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Concern for the internet&lt;/strong&gt;. Regardless of the SGO’s main activity, it must always take steps to ensure the openness of the Internet as mentioned in &lt;a href=&quot;https://www.mozilla.org/en-US/about/manifesto/&quot;&gt;the Mozilla manifesto&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;self-sustainable&lt;/strong&gt;. An SGO must thrive to be self-sustainable, both in a financial manner and in its dependencies on other services. If the SGO uses a service it must ensure that the service is fair to the community, and can be changed in case of problem arises with the entity supplying it.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;compensating individual innovation&lt;/strong&gt;. An SGO must promote users’ innovation, including users adding features and content to the SGO projects. Users may monetize any feature they add without a-priory permission from the organization and may enjoy the majority of the revenues received from these features (though at least part of it must be given to the SGO if the revenue is high enough)&lt;/p&gt;
+
+    &lt;p&gt;&lt;em&gt;This last complex principle is an effort to bring the benefits of the capital philosophy to SGOs, with a light version of the tax.&lt;/em&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;call-for-action&quot;&gt;Call for action&lt;/h2&gt;
+&lt;p&gt;Almonit is currently working on Alpress, a self-governing publication platform following the principles described in this article.&lt;/p&gt;
+
+&lt;p&gt;Follow us &lt;a href=&quot;https://twitter.com/GoAlmonit&quot;&gt;on Twitter&lt;/a&gt;, join &lt;a href=&quot;https://t.co/Z79kgx8noD?amp=1&quot;&gt;our Telegram group&lt;/a&gt; or drop us an email (contact@almonit.club) to get involved in the project.&lt;/p&gt;
+
+&lt;h2 id=&quot;acknowledgement&quot;&gt;Acknowledgement&lt;/h2&gt;
+&lt;p&gt;Thanks to Krzysztof Lewosz, Muhammed Tanrıkulu, Eylon Aviv, and Craig Sailor for participating in the preparation of this article.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;[This article was originally published in Almonit blog with small modifications]&lt;/strong&gt;&lt;/p&gt;</content><author><name>Neiman</name></author><category term="SGO" /><category term="SGO" /><summary type="html">If there was any doubt before, COVID-19 made it clear: digital life is real life. Our lives exist on the Internet no less so than on the streets. But while we control the streets (via the state), the Internet is made of centralized platforms controlled by commercial corporates.</summary></entry><entry><title type="html">Introduction to Dwebsites</title><link href="http://localhost:4000/blog/2020-05-21/Introduction_to_Dwebsitse" rel="alternate" type="text/html" title="Introduction to Dwebsites" /><published>2020-05-21T09:43:33+02:00</published><updated>2020-05-21T09:43:33+02:00</updated><id>http://localhost:4000/blog/2020-05-21/Introduction_to_Dwebsitse</id><content type="html" xml:base="http://localhost:4000/blog/2020-05-21/Introduction_to_Dwebsitse">&lt;div align=&quot;center&quot;&gt;&lt;span style=&quot;color:red; font-family: monaco,Consolas,Lucida Console,monospace;&quot;&gt; -- &lt;b&gt;You are visiting a decentralized website&lt;/b&gt; -- &lt;/span&gt;&lt;/div&gt;
+&lt;p&gt;&lt;br /&gt;
+Decentralized websites, also known as Dwebsites, first appeared towards the end of 2018. The beginning was slow, with few individuals experimenting independently. &lt;a href=&quot;/blog/2019-05-28/list-of_ENSIPFS-websites&quot;&gt;The first time Almonit counted Dwebsites&lt;/a&gt;, in May 2019, we found there are only 21 Dwebsites in existence.&lt;/p&gt;
+
+&lt;p&gt;But Dwebsites scene caught up quickly. The creation of dozens of new Dwebsites every week, constantly pushing the boundaries of what Dwebsites are capable of,  made Vitalik call Dwebsites “one of the most effective demo to show people”.&lt;/p&gt;
+
+&lt;p&gt;As any grassroots movement, Dwebsites state can be confusing at this early stage. People are not sure what is a Dwebsite exactly? How it differs from the regular website? Why build a Dwebsite and what is it good for?&lt;/p&gt;
+
+&lt;p&gt;This article will help you answer all these questions, and then some!&lt;/p&gt;
+
+&lt;h2 id=&quot;what-are-dwebsites&quot;&gt;What are Dwebsites?&lt;/h2&gt;
+&lt;p&gt;Wait, before we answer this question do you know what a regular website is? Here’s what Wikipedia says:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;A website is a collection of web pages that are identified by a common domain name and published on at least one web server.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Dwebsite is the same only that you add the word “decentralized” before everything:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;A &lt;strong&gt;Dwebsite&lt;/strong&gt; is a collection of web pages that are identified by a &lt;strong&gt;decentralized domain name&lt;/strong&gt; and published on at least one &lt;strong&gt;decentralized storage&lt;/strong&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Thus, a Dwebsite is a regular website, just with:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;decentralized name service (e.g, ENS),&lt;/li&gt;
+  &lt;li&gt;decentralized storage (e.g., IPFS)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;However, that’s where things can get slightly confusing. All classic websites use the same naming service (DNS), and the same web server protocol.  When creating a Dwebsite you can choose between many decentralized name services and decentralized storage protocols, with new options keep popping up all the time.&lt;/p&gt;
+
+&lt;p&gt;The first Dwebsites used ENS (Ethereum Name Service) for a naming service and IPFS for storage. That’s why they’re sometimes called ENS+IPFS websites.&lt;/p&gt;
+
+&lt;p&gt;Dwebsites using other methods appeared shortly after. By now there is ENS+Swarm, “Unstoppable Domains”+IPFS, ENS+DAT, ENS+Skynet  and others. Each combination offers slightly different capabilities and limitations for the Dwebsites created with it.&lt;/p&gt;
+
+&lt;p&gt;To complicate things further, you also need different tools to access each combination. At Almonit we try to keep &lt;a href=&quot;https://addons.mozilla.org/en-US/firefox/addon/almonit/&quot;&gt;our browser extension&lt;/a&gt; up-to-date with all existing combinations. But this mission is going to become difficult if we’re correct in our forecast that the Cambrian period of decentralized name services and storages is still about to come.&lt;/p&gt;
+
+&lt;h2 id=&quot;why-do-we-need-dwebsites&quot;&gt;Why do we need Dwebsites?&lt;/h2&gt;
+&lt;p&gt;Here are a few main reasons why you should have one.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Decentralizing the last mile of DApp&lt;/strong&gt;. Most DApps are accessible through a centralized website. This is a ‘centralized bottleneck to DApps’. Remember, your DApp is only as decentralized as its least decentralized component. Dwebsites ‘decentralize the last mile’ of bringing DApps to users.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ol start=&quot;2&quot;&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Ownership&lt;/strong&gt;. You may think you own your website, but do you really? What if your host goes offline? What if your domain name registrar suddenly gives your name away? &lt;em&gt;You don’t own your website, but you do own your Dwebsite&lt;/em&gt;.&lt;/p&gt;
+
+    &lt;p&gt;Dwebsites also opens up possibilities for more complex ownership models. A Dwebsite may be owned by a DAO, or a group of people or even by everyone on the internet! Complex ownership of Dwebsites is one thing which is really waiting for experimentation.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ol start=&quot;3&quot;&gt;
+  &lt;li&gt;&lt;strong&gt;Stability and security&lt;/strong&gt;. It is &lt;em&gt;very&lt;/em&gt; difficult, almost impossible, to censor, block or take-down a Dwebsite (without taking down the whole internet in the country). Are you a political organization for example? Use Dwebsites. Dwebsites makes the equation of building a website vs. taking down a website asymmetric: it is easy and cheap to create but hard and expensive to take down, if possible at all.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ol start=&quot;4&quot;&gt;
+  &lt;li&gt;&lt;strong&gt;Anonymity for Dwebsite creator&lt;/strong&gt;. It is relatively easy to access websites anonymously: change your DNS, use a VPN or Tor browser. However, it is far more difficult to create websites anonymously. But to create a Dwebsite anonymous? Much easier. Privacy wins another battle.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;properties-of-dwebsites&quot;&gt;Properties of Dwebsites&lt;/h2&gt;
+&lt;p&gt;There are three standard properties of Dwebsite, same as many decentralized networks.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Censorship-resistance&lt;/strong&gt;. No one, besides the owners, can censor or modify a Dwebsite content. That’s what real ownership looks like.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ol start=&quot;2&quot;&gt;
+  &lt;li&gt;&lt;strong&gt;Robust&lt;/strong&gt;. It’s not only difficult to block decentralized networks, but it’s also difficult to ddos or take them down. That’s why Bitcoin, Ethereum and BitTorrent have a 99.8% (approximately) uptime. As long as the networks underlying your Dwebsite functions, your Dwebsite will be up.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ol start=&quot;3&quot;&gt;
+  &lt;li&gt;&lt;strong&gt;Private&lt;/strong&gt;. Dwebsites are not only anonymous to create (see the previous section), but also private to use. When using a Dwebsite you do not interact with the owner of the Dwebsite, but only with the decentralized network that operates it. For example, ENS+IPFS Dwebsites are as private as Ethereum and IPFS networks are.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;current-markets-with-dwebsites&quot;&gt;Current markets with Dwebsites&lt;/h2&gt;
+&lt;p&gt;One small section is not enough to survey the vibrant Dwebsites ecosystem, but let’s take a quick glance.&lt;/p&gt;
+
+&lt;p&gt;We start with Dex (Decentralized Exchange) which use Dewbsites. Actually, Dex and Dwebsite are a match made in heaven. There’s already one for Uniswap (even three, openswap.eth, uniswapexchange.eth, ipfswapper.eth), StiB P2P (stib.eth), Defswap (defswap.eth), McAfeeDex (switchdex.eth), XeonbitDex (xeonbitdex.eth) and others.&lt;/p&gt;
+
+&lt;p&gt;Next, decentralized e-commerce. Check out Origin (originswag.eth), Ethereum (officialswag.eth) and Gitcoin (gitcoinswagdemo.eth) swag stores. There are also plenty of “name commerce” Dwebsites already, selling ENS subdomains (names.statusnet.eth, smartdomains.eth, ens.ismoney.eth).&lt;/p&gt;
+
+&lt;p&gt;DeFi Dwebsites? Sure! Tornado Cash (tornadocash.eth), RigoBlock (beta.rigoblock.eth) or Paynowby (paynowby.eth) to name a few.&lt;/p&gt;
+
+&lt;p&gt;Free speech and experiments are notable. Check out Dwebsites like OwnPaste (ownpaste.eth), a pseudonymous paste sharing app, Turms (turmsamt.eth), anonymous message transport or  TiddyWiki (bluelightav.eth), helping to organize your data with IPFS.&lt;/p&gt;
+
+&lt;p&gt;There’s much more to Dwebsites. Games (home.hackerlab.eth), musicians (zplit.eth), organization (spacex.eth) or blogs (blog.almonit.eth).&lt;/p&gt;
+
+&lt;p&gt;The ecosystem is rich, diverse and most importantly, grows rapidly.&lt;/p&gt;
+
+&lt;h2 id=&quot;join-the-dwebsite-community&quot;&gt;Join the Dwebsite community!&lt;/h2&gt;
+&lt;p&gt;Do you love the idea of Dwebsites? Do you want to join the movement? Here’s what you can do to join already at this stage.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Join the Dwebsite community&lt;/strong&gt;. The Dwebsite community lives in Matrix/Riot, at channel &lt;code class=&quot;highlighter-rouge&quot;&gt;#almonit:dev.almonit.club&lt;/code&gt;. Say “hi” introduce yourself and we’ll say “hi” back, pinky swear.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ol start=&quot;2&quot;&gt;
+  &lt;li&gt;&lt;strong&gt;Build a Dwebsite&lt;/strong&gt;. Are you a web developer? a Dapp builder? an activist? an early adopter? Then what are you waiting for? Go create your first Dwebsite!&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ol start=&quot;3&quot;&gt;
+  &lt;li&gt;&lt;strong&gt;Write and talk about Dwebsites&lt;/strong&gt;. The ecosystem need writers, thinkers, artists, philosophers and videos makers.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ol start=&quot;4&quot;&gt;
+  &lt;li&gt;&lt;strong&gt;Use Dwebsites&lt;/strong&gt;. To find them all go to &lt;a href=&quot;http://almonit.eth&quot;&gt;almonit.eth&lt;/a&gt; (if you installed &lt;a href=&quot;https://addons.mozilla.org/en-US/firefox/addon/almonit/&quot;&gt;our browser extension&lt;/a&gt;) or &lt;a href=&quot;https://almonit.eth.link/#/&quot;&gt;almonit.eth.link&lt;/a&gt; (via a gateway)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;[This article was originally published in Almonit blog with small modifications]&lt;/strong&gt;&lt;/p&gt;</content><author><name>Neiman</name><email>eyal@esteroids.xyz</email></author><category term="Dwebsites" /><category term="Almonit, Dwebsites" /><summary type="html">-- You are visiting a decentralized website -- Decentralized websites, also known as Dwebsites, first appeared towards the end of 2018. The beginning was slow, with few individuals experimenting independently. The first time Almonit counted Dwebsites, in May 2019, we found there are only 21 Dwebsites in existence.</summary></entry><entry><title type="html">List of ENS+IPFS Websites</title><link href="http://localhost:4000/blog/2019-05-28/list-of_ENSIPFS-websites" rel="alternate" type="text/html" title="List of ENS+IPFS Websites" /><published>2019-05-28T00:00:00+02:00</published><updated>2019-05-28T00:00:00+02:00</updated><id>http://localhost:4000/blog/2019-05-28/list-of_ENSIPFS-websites</id><content type="html" xml:base="http://localhost:4000/blog/2019-05-28/list-of_ENSIPFS-websites">&lt;div class=&quot;warning alert&quot;&gt;
+  &lt;p&gt;Almonit is developing an ENS+IPFS plugin for Firefox.&lt;/p&gt;
+
+  &lt;p&gt;Would you like to be the first to try it out? Please do! Contact us at: contact@almonit.club . All we ask in return is an honest feedback.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;A few weeks ago we wrote a series of articles about ENS+IPFS websites (now removed). We even stored our blog in this method,&lt;/p&gt;
+
+&lt;p&gt;A lot happened in those few weeks.&lt;/p&gt;
+
+&lt;p&gt;ENS replaced its (cumbersome) auction model with a renting one. You now simply pay 5$ per year for each name. The project also switched to a permanent registrar.&lt;/p&gt;
+
+&lt;p&gt;We looked at the main resolver (where most ENS transactions are done). It seems that people connect ENS names their wallet, but not to their website.&lt;/p&gt;
+
+&lt;p&gt;We got curious, how popular are ENS+IPFS websites? Well, Let’s find out.&lt;/p&gt;
+
+&lt;h2 id=&quot;results-ensipfs-websites&quot;&gt;Results: ENS+IPFS websites&lt;/h2&gt;
+&lt;p&gt;We found the following list of ENS+IPFS websites (in no particular order).&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://almonit.eth&quot;&gt;almonit.eth&lt;/a&gt; (&lt;strong&gt;that’s us!&lt;/strong&gt;)&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://pepesza.eth&quot;&gt;pepesza.eth&lt;/a&gt; (&lt;strong&gt;that’s one of our developers!&lt;/strong&gt;)&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://portalnetwork.eth&quot;&gt;portalnetwork.eth&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://monkybrain.eth&quot;&gt;monkybrain.eth&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://amoebacore.eth&quot;&gt;amoebacore.eth&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://hozt.portalnetworkweb.eth&quot;&gt;hozt.portalnetworkweb.eth&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://christophershen.eth&quot;&gt;christophershen.eth&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://phyrextsai.eth&quot;&gt;phyrextsai.eth&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://mycrypto.dappnode.eth&quot;&gt;mycrypto.dappnode.eth&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://game.portalnetwork.eth&quot;&gt;game.portalnetwork.eth&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://cv.gnelson.eth&quot;&gt;cv.gnelson.eth&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://digitallyrare.eth&quot;&gt;digitallyrare.eth&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://neelyadav.eth&quot;&gt;neelyadav.eth&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://mattcondon.eth&quot;&gt;mattcondon.eth&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://nathanclayforcongress.eth&quot;&gt;nathanclayforcongress.eth&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://bradsherman.eth&quot;&gt;bradsherman.eth&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://liquid-long.keydonix.eth&quot;&gt;liquid-long.keydonix.eth&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://liquid-close.keydonix.eth&quot;&gt;liquid-close.keydonix.eth&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://hadriencroubois.eth&quot;&gt;hadriencroubois.eth&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://badger.merklework.eth&quot;&gt;badger.merklework.eth&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://pricefeed.doracle.eth&quot;&gt;pricefeed.doracle.eth&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;You can access them using status or opera browser for mobile.&lt;/p&gt;
+
+&lt;p&gt;Even better: you can write us (contact@almonit.club) to become an early testers of Almonit ENS+IPFS plugin (will be published soon). The list is already embbeded inside the plugin!&lt;/p&gt;
+
+&lt;h2 id=&quot;investigation-methods&quot;&gt;Investigation methods&lt;/h2&gt;
+&lt;p&gt;ENS uses a contract called resolver to connect names to content. While you can create your own resolver, most people (we believe) use the resolver that ENS team provides.&lt;/p&gt;
+
+&lt;p&gt;We scanned only the latest version of the ENS resolver. This means that there may be more ENS+IPFS websites hiding in old versions.&lt;/p&gt;
+
+&lt;p&gt;Our method was strightforward. We collected all the transactions that connected an ENS name to an IPFS respository. Then we checked if the repository is live. We kept only “serious” websites, and ignored those that look like a test.&lt;/p&gt;
+
+&lt;p&gt;Even in cases it was live, we still had a problem. ENS supplies the hash of a name, but not the registered name itself.&lt;/p&gt;
+
+&lt;p&gt;This means that we had to reverse the hash somehow. It went very well for the websites so far, but we’ll need help in the future to keep this index up-to-date.&lt;/p&gt;
+
+&lt;h2 id=&quot;help-needed-unidentified-ensipfs-websites&quot;&gt;Help needed: unidentified ENS+IPFS websites&lt;/h2&gt;
+&lt;p&gt;Here was supposed to be a list of unidentified ENS+IPFS websites. Alas, we were able to deduce all relevant ENS names. Cheers to us, I guess.&lt;/p&gt;
+
+&lt;h2 id=&quot;issues&quot;&gt;Issues&lt;/h2&gt;
+&lt;p&gt;The ENS+IPFS sphere is not developed, to say the least. There are less than 20 websites so far.&lt;/p&gt;
+
+&lt;p&gt;One issue is availability. Many ENS+IPFS websites are set in the registrar, but are not available in ipfs. Reminder: IPFS+ENS is not magic. Your website will be available if it’s either popular or if you seed it yourself.&lt;/p&gt;
+
+&lt;p&gt;There tools and service to make your website available. Either for free using &lt;a href=&quot;https://github.com/agentofuser/ipfs-deploy&quot;&gt;this tool&lt;/a&gt; (up to approximately 1 GB by Infura, Pinata or Cloudflare). Or for a price, check out Pinata and Eternum.&lt;/p&gt;
+
+&lt;p&gt;Gateways are actually another (strange) issue.&lt;/p&gt;
+
+&lt;p&gt;Some websites are available in one gateway, but not in another. Ain’t ipfs supposed to be a p2p network? where if one (strong) node like a gateway has content, all the others should have it? strange indeed.&lt;/p&gt;
+
+&lt;p&gt;That said, ENS+IPFS is a cool idea. What’s more romantic than being a real pioneer in a novel technology? It’s like being in the first wave of Mars settles.&lt;/p&gt;
+
+&lt;p&gt;There are use-cases for every new technology, it’s up to us to find the use-cases for distributed websites.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;[This article was originally published in Almonit blog with small modifications]&lt;/strong&gt;&lt;/p&gt;</content><author><name>Neiman</name><email>eyal@esteroids.xyz</email></author><category term="ENS+IPFS" /><category term="ENS+IPFS" /><summary type="html">Almonit is developing an ENS+IPFS plugin for Firefox.</summary></entry></feed>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>ENS+IPFS Part 2: Accessing ENS+IPFS Websites | Neiman’s Blog</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="ENS+IPFS Part 2: Accessing ENS+IPFS Websites" />
+<meta name="author" content="Neiman" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A guide for accessing websites ENS+IPFS websites" />
+<meta property="og:description" content="A guide for accessing websites ENS+IPFS websites" />
+<link rel="canonical" href="http://localhost:4000/blog/2019-03-13/ENSIPFS-Part-2-Accessing" />
+<meta property="og:url" content="http://localhost:4000/blog/2019-03-13/ENSIPFS-Part-2-Accessing" />
+<meta property="og:site_name" content="Neiman’s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-03-13T00:00:00+01:00" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","url":"http://localhost:4000/blog/2019-03-13/ENSIPFS-Part-2-Accessing","headline":"ENS+IPFS Part 2: Accessing ENS+IPFS Websites","dateModified":"2019-03-13T00:00:00+01:00","datePublished":"2019-03-13T00:00:00+01:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2019-03-13/ENSIPFS-Part-2-Accessing"},"author":{"@type":"Person","name":"Neiman"},"description":"A guide for accessing websites ENS+IPFS websites","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/blog/assets/main.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/assets/apple-touch-icon.png">
+
+</head>
+
+
+  <body>
+
+    <nav class="nav">
+  <div class="nav-container">
+    <a href="/blog/">
+    	<img src="/blog/resources/images/neiman_head_circle.png " height="80">
+    </a>
+    <ul>
+      <li><a href="/blog/">Home</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+    <main>
+      <div class="post">
+  <div class="post-info">
+    <span>Written by</span>
+    
+        Neiman
+    
+
+    
+      <br>
+      <span>on&nbsp;</span><time datetime="2019-03-13 00:00:00 +0100">March 13, 2019</time>
+    
+  </div>
+
+  <h1 class="post-title">ENS+IPFS Part 2&#58; Accessing ENS+IPFS Websites</h1>
+  <div class="post-line"></div>
+
+  <p>This website is accessible in an ENS+IPFS version, <a href="http://almonit.eth/">almonit.eth</a>.</p>
+
+<p><a href="/blog/2019-03-12/ENSIPFS-Part-1-Introduction">Part 1</a> explained what ENS+IPFS websites are, and this part explains how to access such websites. <a href="/blog/2019-03-14/ENSIPFS-Part-3-Creation">Part 3</a> explains how to create them.</p>
+
+<h3 id="option-1-status-browser-highest-quality-mobile-phones-only--">Option 1: Status browser (highest quality, mobile phones only)  <img style="width: 120px; float:right;" src="/blog/resources/images/ENSIPFS/status.png" /></h3>
+<p><a href="https://status.im/">Status browser</a>, also called a “mobile Ethereum OS”, supports ENS+IPFS websites <em>only</em> for Android (Desktop version doesn’t support it and iPhone version is in beta status). That’s the easiest option to access almonit.eth.</p>
+
+<p>Limitations? Status is available only with the Google Play Store (hey! not everyone use Google Store!), and apparently it doesn’t support <em>all</em> android devices (such as, hmm, mine). That said, the company aim for blockchain values such as privacy and decentralization (their <a href="https://status.im/docs/FAQs.html">FAQ</a> is honest and great).</p>
+
+<p>Cons? Requires to open a Status and Ethereum account.</p>
+
+<div class="success alert">
+  <p>Both Status and Metamask (described below) require to open a software account (=password) and to have an Ethereum account. That’s because both softwares are general Ethereum tools and not dedicated ENS+IPFS solutions.</p>
+
+  <p>In theory no accounts are needed to access ENS+IPFS websites; The future should bring simpler tools.</p>
+</div>
+
+<p><strong>Installation</strong>: <a href="https://play.google.com/store/apps/details?id=im.status.ethereum">Google Play Store</a>.</p>
+
+<h3 id="option-2-firefox--metamask-moderate-quality-all-devices">Option 2: Firefox + Metamask (moderate quality, all devices)<img style="width: 120px; float:right;" src="/blog/resources/images/ENSIPFS/metamask.png" /></h3>
+
+<p><a href="https://metamask.io/">Metaamask</a> is a general and relatively easy ENS+IPSF solution (powered by <a href="https://www.portal.network/">Portal Network</a>) for both mobile and desktop devices.</p>
+
+<p>It works, but with hiccups.</p>
+
+<p>Cons? As with Status, Metamask and Ethereum accounts are needed.</p>
+
+<p><strong>Installation</strong>: Install <a href="https://addons.mozilla.org/en-US/firefox/addon/ether-metamask/">Metamask plugin for Firefox</a> and open an account.</p>
+
+<div class="success alert">
+  <p><strong>Metamask with a local Parity node</strong></p>
+
+  <p>For extra security and privacy use a local Parity node with Metamask (instead of Metamask Ethereum node).</p>
+
+  <p>For this start parity in a light node (for fast synchronization, though be careful! it’s an experimental option!), and allow JSON RPC calls (meaning, allow other apps to talk with your Parity node). You do it (after <a href="https://wiki.parity.io/Setup">installing Parity</a>) with this command.</p>
+  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>parity --light --jsonrpc-cors all
+</code></pre></div>  </div>
+  <p>Note that this allows <em>all</em> software to talk to your Parity node, and is quite unsafe. Investigate further if you want to lunch parity while giving access to Metamask only.</p>
+
+  <p>Same is possible with a local geth node.</p>
+</div>
+
+<h3 id="manually-all-devices-decentralized-inconvenient">Manually (all devices, decentralized, inconvenient)</h3>
+<div class="note alert">
+  <p>For power users only at the moment.</p>
+</div>
+
+<p>In theory you can also access ENS+IPFS websites manually.</p>
+
+<p>What you need is the content of the ENS domain. Using this content with IPFS, either via a local IPFS node or a public IPFS gateway such as
+<code class="highlighter-rouge">https://ipfs.io/ipfs/</code>.</p>
+
+<p>In practice, this method can only be used (without extra steps) if ENS content format is the same as IPSF format. The ENS manager only <a href="https://medium.com/the-ethereum-name-service/the-new-ens-manager-now-supports-eip1577-contenthash-82e2d6724fae">started supporting contenthash in February 2019</a> (including IPFS), and it will take some time for website and apps to catch up with it.</p>
+
+<h3 id="future-options-opera-and-brave-browsers">Future options: Opera and Brave browsers</h3>
+<p>It was announced that both Opera (<a href="https://twitter.com/ensdomains/status/1102884419017297921">here</a>) and Brave (<a href="https://twitter.com/ensdomains/status/1105565560224563202?s=19">here</a>) browsers will adopt ENS+IPSF in the future.</p>
+
+<p><strong>[This article was originally published in Almonit blog with small modifications]</strong></p>
+
+</div>
+
+<div class="pagination">
+  
+    <a href="/blog/2019-03-14/ENSIPFS-Part-3-Creation" class="left arrow">&#8592;</a>
+  
+  
+    <a href="/blog/2019-03-12/ENSIPFS-Part-1-Introduction" class="right arrow">&#8594;</a>
+  
+
+  <a href="#" class="top">Top</a>
+</div>
+
+    </main>
+
+    <footer>
+  <span>
+     -- Dwebsites love robots, androids and electric sheep --
+  </span>
+</footer>
+
+  </body>
+</html>

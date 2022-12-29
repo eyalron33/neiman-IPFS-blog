@@ -1,0 +1,23 @@
+I"‚<p>This website is a hub for articles, research and projects done by members of Almonit.</p>
+
+<p>Almonit is an internet organization with cypherpunk values, specifically:</p>
+<ul>
+  <li>Decentralization: systems should not be controlled by a small group of persons.</li>
+  <li>Privacy: privacy is a human right.</li>
+</ul>
+
+<p>To pursue those values we use cryptography, distirubted algorithms, blockchains and peer to peer networks.</p>
+
+<p>Almonit sets some basic design principles of projects:</p>
+<ul>
+  <li>No cutting corners: values before convenience.</li>
+  <li>Open services: if a service is being used by an Almonit project, it must be open (to be defined in a later post).</li>
+  <li>Practicality: we focus on projects that can be implemented with the current state-of-technology.</li>
+</ul>
+
+<p>Examples for topics covered by Almonit? serverless websites (Zeronet, ENS+IPFS), decentralized dispute resolution systems, scaling solutions or application of zk-snarks.</p>
+
+<p>Letâ€™s get ithis thing going, and see where it brings us.</p>
+
+<p><strong>[This article was originally published in Almonit blog with small modifications]</strong></p>
+:ET

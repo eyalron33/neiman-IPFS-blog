@@ -1,0 +1,262 @@
+// colors
+$color-black: #2B2B2B;
+$color-white: #fcfcfc;
+$color-blue: lighten(#1D408C, 10);
+$color-orange: #d16b19;
+$color-green: #1BA914;
+$color-red: #CF191D;
+
+$color-code: darken($color-white, 10);
+
+$color-paginator: darken($color-white, 30);
+$color-paginator-darker: darken($color-paginator, 10);
+$color-paginator-darkest: darken($color-paginator, 40);
+
+$color-orange-dark: darken($color-orange, 15);
+$color-blue-dark: darken($color-blue, 15);
+$color-green-dark: darken($color-green, 15);
+$color-red-dark: darken($color-red, 15);
+
+$color-info: lighten($color-blue, 45);
+$color-warning: lighten($color-orange, 45);
+$color-success: lighten($color-green, 45);
+$color-note: lighten($color-red, 45);
+
+$color-info-dark: darken($color-info, 10);
+$color-warning-dark: darken($color-warning, 15);
+$color-success-dark: darken($color-success, 10);
+$color-note-dark: darken($color-note, 10);
+
+/*************************************************************************
+                             BLUE-COLOR
+/*************************************************************************/
+
+
+/*************************************************************************
+                             BLUE-DARK-COLOR
+/*************************************************************************/
+
+//---------------------------FONT
+.info {
+  color: $color-blue-dark;
+}
+
+
+/*************************************************************************
+                             INFO-COLOR
+/*************************************************************************/
+
+
+//---------------------------BACKGROUND
+
+.info {
+  background-color: $color-info;
+}
+
+/*************************************************************************
+                             INFO-DARK-COLOR
+/*************************************************************************/
+
+
+//---------------------------BORDER
+
+.info {
+  border-color: $color-info-dark;
+}
+
+//---------------------------BACKGROUND
+
+.info code{
+  background-color: $color-info-dark;
+}
+
+
+/*************************************************************************
+                             ORANGE-COLOR
+/*************************************************************************/
+
+
+//---------------------------BORDER
+.definition {
+  border-color: $color-orange;
+}
+
+
+/*************************************************************************
+                             ORANGE-DARK-COLOR
+/*************************************************************************/
+
+//---------------------------FONT
+
+.warning {
+  color: $color-orange-dark;
+}
+
+/*************************************************************************
+                             WARNING-COLOR
+/*************************************************************************/
+
+
+//---------------------------BACKGROUND
+.definition,
+.warning {
+  background-color: $color-warning;
+}
+
+
+
+/*************************************************************************
+                             WARNING-DARK-COLOR
+/*************************************************************************/
+
+
+//---------------------------BORDER
+.warning{
+  border-color: $color-warning-dark;
+}
+
+//---------------------------BACKGROUND
+.warning code {
+  background-color: $color-warning-dark;
+  border-color: $color-orange-dark;
+}
+
+/*************************************************************************
+                             NOTE-COLOR
+/*************************************************************************/
+
+//---------------------------BACKGROUND
+.note {
+  background-color: $color-note;
+}
+
+/*************************************************************************
+                             NOTE-DARK-COLOR
+/*************************************************************************/
+
+//---------------------------BORDER
+.note {
+  border-color: $color-note-dark;
+}
+
+//---------------------------BACKGROUND
+.note code{
+  background-color: $color-note-dark;
+}
+
+/*************************************************************************
+                             RED-DARK-COLOR
+/*************************************************************************/
+
+//---------------------------FONT
+.note {
+  color: $color-red-dark;
+}
+
+
+/*************************************************************************
+                             SUCCESS-COLOR
+/*************************************************************************/
+
+//---------------------------BACKGROUND
+.success {
+  background-color: $color-success;
+}
+
+/*************************************************************************
+                             SUCCESS-DARK-COLOR
+/*************************************************************************/
+
+//---------------------------BORDER
+.success {
+  border-color: $color-success-dark;
+}
+
+//---------------------------BACKGROUND
+.success code {
+  background-color: $color-success-dark;
+}
+
+/*************************************************************************
+                             GREEN-DARK-COLOR
+/*************************************************************************/
+
+//---------------------------FONT
+.success {
+  color: $color-green-dark;
+}
+
+
+/*******************************
+//          BOX BOX BOX
+/*********************************/
+
+
+/*************************************************************************
+                          VERTICAL-RHYTHM
+/*************************************************************************/
+
+$golden-ratio: 1.618;
+
+$b-w-sep: 0.3rem;
+
+// device font size
+$f-s-mobile: 16px;
+$f-s-tablet: 18px;
+$f-s-desktop: 19px;
+
+// set default font size to 100% of browser's font size
+$f-s-default: 1rem;
+// set default line height to golden ratio between default font size
+$l-h-default: $f-s-default * $golden-ratio;
+
+// code font-size and line height
+$l-h-code: $l-h-default * 0.75;
+
+$l-h-baseline: $l-h-default * 0.5;
+$l-h-baseline-double: $l-h-default;
+$l-h-baseline-half: $l-h-default * 0.25;
+
+.alert {
+  border: 1px solid;
+}
+
+.alert > li,
+.alert > ol,
+.alert > ul {
+  margin-left: $l-h-baseline * 1.5;
+}
+
+.alert {
+  margin-bottom: $l-h-baseline-double;
+}
+
+.alert code {
+  padding: 1px 3px;
+}
+
+.alert {
+  padding-left: $l-h-baseline;
+  padding-right: $l-h-baseline;
+}
+
+.alert {
+  padding-top: $l-h-baseline-half;
+  padding-bottom: $l-h-baseline-half;
+}
+
+.alert h4 {
+  padding-top: $l-h-baseline;
+}
+
+.alert > li, .alert > ol, .alert > ul {
+  padding-bottom: $l-h-baseline-half;
+}
+
+.alert p {
+  padding-bottom: $l-h-baseline;
+}
+
+.alert p:last-child {
+  padding-bottom: 0;
+}

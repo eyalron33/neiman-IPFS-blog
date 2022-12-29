@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Woolball - A Name System with Links | Neiman’s Blog</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Woolball - A Name System with Links" />
+<meta name="author" content="Neiman" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Woolball is a name system with links; names can link to each other. This simple extension creates a whole new kind of a name system, with extra capabilities over the existing ones, like a native web3 accounts system, a reputation score for names, and structured DAOs." />
+<meta property="og:description" content="Woolball is a name system with links; names can link to each other. This simple extension creates a whole new kind of a name system, with extra capabilities over the existing ones, like a native web3 accounts system, a reputation score for names, and structured DAOs." />
+<link rel="canonical" href="http://localhost:4000/blog/2022-10-25/Woolball_a_name_system_with_links" />
+<meta property="og:url" content="http://localhost:4000/blog/2022-10-25/Woolball_a_name_system_with_links" />
+<meta property="og:site_name" content="Neiman’s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-10-25T01:00:33+02:00" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","url":"http://localhost:4000/blog/2022-10-25/Woolball_a_name_system_with_links","headline":"Woolball - A Name System with Links","dateModified":"2022-10-25T01:00:33+02:00","datePublished":"2022-10-25T01:00:33+02:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2022-10-25/Woolball_a_name_system_with_links"},"author":{"@type":"Person","name":"Neiman"},"description":"Woolball is a name system with links; names can link to each other. This simple extension creates a whole new kind of a name system, with extra capabilities over the existing ones, like a native web3 accounts system, a reputation score for names, and structured DAOs.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/blog/assets/main.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/assets/apple-touch-icon.png">
+
+</head>
+
+
+  <body>
+
+    <nav class="nav">
+  <div class="nav-container">
+    <a href="/blog/">
+    	<img src="/blog/resources/images/neiman_head_circle.png " height="80">
+    </a>
+    <ul>
+      <li><a href="/blog/">Home</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+    <main>
+      <div class="post">
+  <div class="post-info">
+    <span>Written by</span>
+    
+        Neiman
+    
+
+    
+      <br>
+      <span>on&nbsp;</span><time datetime="2022-10-25 01:00:33 +0200">October 25, 2022</time>
+    
+  </div>
+
+  <h1 class="post-title">Woolball - A Name System with Links</h1>
+  <div class="post-line"></div>
+
+  <p><img style="width: 200px; float: right; padding: 20px" src="/blog/resources/images/woolball/cat-with-woolball.png" /></p>
+
+<p><em><strong>TL;DR</strong>. Woolball is a name system with links; names can link to each other.</em></p>
+
+<p><em>This simple extension creates a whole new kind of a name system, with extra capabilities over the existing ones, like a native web3 accounts system, a reputation score for names, and structured DAOs.</em></p>
+
+<p><em>Woolball is a flat name system! There is no hierarchy, as subdomains are replaced by links. It’s also a cyclic system since names link to each other.</em></p>
+
+<p><em>Links are written with a <code class="highlighter-rouge">#</code>, so a link from <code class="highlighter-rouge">alice</code> to <code class="highlighter-rouge">bob</code> is <code class="highlighter-rouge">alice#bob</code>.</em></p>
+
+<p><em>Having all those links makes the graph of the name system look, well, like one big ball of wool.</em></p>
+
+<p><img src="/blog/resources/images/woolball/woolballs.png" /></p>
+
+<h2 id="1-introduction">1. Introduction</h2>
+<p>We introduce Woolball, a flat name system that uses links between names instead of subdomains.</p>
+
+<p>These links create a new kind of name system with an internal social structure. It yields without any extra effort</p>
+<ul>
+  <li>a Web3 accounts system,</li>
+  <li>a reputation score for names, and</li>
+  <li>a tool for making a structure for a DAO.</li>
+</ul>
+
+<p>We believe links bring Internet name systems one step closer to how we handle identities in the physical world.</p>
+
+<p>Woolball is a flat name system! It has no subdomains. We use links to replace them. Hierarchy is simply not needed.</p>
+
+<p>Nevertheless, Woolball is an extension of subdomain name systems. Everything you could do with subdomains, you can also do with Woolball.</p>
+
+<p>This article is a description of Woolball, not a technical specification. We tried to leave as many boring bits out but focused on what’s different. We tried to make things clear, not accurate or tedious.</p>
+
+<p>Ready? Let’s go! Or as we say in Woolball, “let’s link!”.</p>
+
+<h3 id="11-wait-wait-whats-wrong-with-the-subdomain-system">1.1. Wait wait! What’s wrong with the subdomain system?</h3>
+<p>Well, nothing is wrong with it, we just don’t think it answers the needs of a Web3 name system.</p>
+
+<p>Look, people use Web3 name systems, like ENS, as their identity. That’s clear, see crypto Twitter or any other Ethereum social interaction.</p>
+
+<p>But how are subdomains connected to this identity? That’s less clear.</p>
+
+<p>When <a href="https://help.coinbase.com/en/wallet/managing-account/coinbase-ens-support">Coinbase</a> give someone a subdomain, they kind of attest something about them. But since this attestation is completely separated from the person’s main ENS name, it’s almost invisible.</p>
+
+<p>Even worse! Imagine you get subdomains from more organizations (<a href="https://twitter.com/optinames?s=21&amp;t=ohRJcBEyBZvxGo37quLJ3w">OptiNames</a>, <a href="https://decentraland.org/blog/announcements/id-goes-di/">Decenterland</a>, and <a href="https://bensyc.eth.limo/">Bensyc</a> already hand out some). You’ll end up managing dozens of subdomain accounts, so we’re back to web 2.0 all over again.</p>
+
+<p>Once you replace subdomains with links it all makes sense though. You don’t need to manage dozens of accounts. You just manage yours. All the rest of your accounts are linked to it; they become part of your Web3 identity.</p>
+
+<h2 id="2-system-overview">2. System Overview</h2>
+<p>Most name systems have only one main object, a name. Woolball, however, has two main objects, a name, and a link. Two! See? it’s already <em>exciting</em>.</p>
+
+<p>There’s only one layer of names in Woolball. Yup, no TLDs, no subdomains, and no hierarchy at all. There’s simply no need for it. However, all the names in this layer are <em>unique</em>.</p>
+
+<p>Ready? here comes the exciting part: each name can create links to other names (or to other links)!</p>
+
+<p>Links are a one-directional arrow pointing from one name (linker) into another name or into a link (in both cases they are called linkee).</p>
+
+<p>Every link has an alias. That alias is unique among all the links coming from one name (so one name can’t make two links with the same alias, got it?).</p>
+
+<p>How do you call links?</p>
+
+<p>First, links are written with a <code class="highlighter-rouge">#</code>. A link from <code class="highlighter-rouge">alice</code> to <code class="highlighter-rouge">bob</code> is <code class="highlighter-rouge">alice#bob</code>.</p>
+
+<p>But if <code class="highlighter-rouge">alice</code> made a link to <code class="highlighter-rouge">bob</code> and gave it the alias “BobThegreat”, then <code class="highlighter-rouge">alice#BobThegreat</code> is the name of this link.</p>
+
+<p>There’s much more to say about links. How do you use them? What do they inherit from the names they link to? But hold your horses, we’ll get to it in further sections.</p>
+
+<p>Btw, you can imagine the graph of Woolball as being a collection of names with many links from one name to another. This looks like one big messy “ball of wool”, hence the name.</p>
+
+<h2 id="3-names">3. Names</h2>
+<p>Woolball names are the basic object of the system.</p>
+
+<p>They’re also the most boring object of the system since they’re similar to other name systems. Let’s not spend too many words on them.</p>
+
+<p>The basic facts:</p>
+<ul>
+  <li>The ID of the name is the hash of the name.</li>
+  <li>Each name has an owner, a controller, and a resolver. The owner owns the name, the controllers operate it, and the resolver specifies its functionality. This is similar to ENS.</li>
+  <li>
+    <p>Names are registered for a finite amount of time (but can be extended).</p>
+
+    <p>We didn’t want to go down the path of giving away names forever, because we’re afraid of eternity and afraid of losing names when people lose their keys.</p>
+  </li>
+</ul>
+
+<p>Each name can create links (ta-dam!), or others can create links to it (ta-dam again!). This gives two interesting collections associated with each name:</p>
+<ol>
+  <li>A collection of all the links the name created.</li>
+  <li>A collection of all the links pointing to this name.</li>
+</ol>
+
+<p>Who can extend names? The answer is not that simple, since there are now also links in the game. Let’s discuss that in a new subsection.</p>
+
+<h3 id="31-extension-of-names">3.1. Extension of names</h3>
+<p>We don’t want to let anyone extend the registration of a name; it may cause dead names (where the owner lost the key) to become zombies and be registered to a ghost owner forever.</p>
+
+<p>But there’s an issue also if we only let the owner of the name extend its own registration.</p>
+
+<p>Why? Well, when a name expires all the links it created disappear. However, some people may come to rely on those links; this makes it risky for them.</p>
+
+<p>To prevent the situation of names expiring before all of their links expire, we make the following rule for extending the registration of names.</p>
+
+<blockquote>
+  <p>The registration of a name can be extended either by the owner of the name or by the owner of a valid link (as opposed to an “expired or canceled” link) that this name created.</p>
+</blockquote>
+
+<h2 id="4-links">4. Links</h2>
+<p>Let’s get the boring bits out first. Like names, each link has</p>
+<ul>
+  <li>a controller,</li>
+  <li>a resolver.</li>
+</ul>
+
+<p>However, <em>unlike</em> names, a link doesn’t have an owner! Instead, it has three new fields.</p>
+<ul>
+  <li>from,</li>
+  <li>to,</li>
+  <li>type.</li>
+</ul>
+
+<p>The fields ‘from’ and ‘to’ specify who created the link and to where it points. Both ‘from’ and ‘to’ can be either names or links.</p>
+
+<p>the ‘type’ of the link determines who actually owns the link. By owning we mean the person who can cancel it, transfer it, etc. We describe the possible types in a section below.</p>
+
+<p>Links have one more additional field, ‘alias’, which determines the name of the link. We’ll discuss that as well in a separate section.</p>
+
+<p>To sum it all up, a link object has the following structure.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Link {
+    from: nameID
+    to: nameID
+    type;
+    alias;
+    resolver;
+    controller;
+}
+</code></pre></div></div>
+
+<p>The ID of a link is <code class="highlighter-rouge">Hash(ID of 'from' field, alias)</code>.</p>
+
+<p>Last but not least, a link can also create other links from itself, and other names or links can link to it.</p>
+
+<p>So, similar to names, each link has two collections associated with it.</p>
+<ol>
+  <li>A collection of all the links the link created.</li>
+  <li>A collection of all links pointing to this link.</li>
+</ol>
+
+<p>Note that one name (or link) can make several links to another name (or link) as long as each got a different alias.</p>
+
+<h3 id="41-ahmadbasia">4.1. <code class="highlighter-rouge">ahmad#basia</code></h3>
+<p>Links are written with a <code class="highlighter-rouge">#</code>. So if the name <code class="highlighter-rouge">ahmad</code> makes a link to <code class="highlighter-rouge">basia</code> it’s written as <code class="highlighter-rouge">ahmad#basia</code>.</p>
+
+<p>BUT – if <code class="highlighter-rouge">ahmad#basia</code> has a contenthash of a website and is used as a URL in a browser, you need to write <code class="highlighter-rouge">greatBasia.ahmad</code>. See? you exchange the <code class="highlighter-rouge">#</code> with a <code class="highlighter-rouge">.</code>, and reverse the order of names in the link.</p>
+
+<p>That’s not our fault, that’s how the URL standard is.</p>
+
+<h3 id="42-alias">4.2. Alias</h3>
+<p>In the real world, identity has two components. One is what you claim about yourself, while the second is what others claim about you.</p>
+
+<p>For example, you may claim that you are “Ahmad the great”, but you will not really be this person till enough people will think of you as “Ahmad the great”.</p>
+
+<p>In some cases, your claim about yourself matters much less than what others claim about you.</p>
+
+<p>A link and its ‘alias’ field is a way to equip an Internet name system with the concept of what others think of you.</p>
+
+<p>Basically ‘alias’ is a string that is set by the person who created the link. If they choose not to set an ‘alias’, then by default the alias equals the name of the target of the link.</p>
+
+<p>The field ‘alias’ is unique among all the links a name (or a link) creates. One name (or link) can’t create two links with the same alias.</p>
+
+<p>The field ‘alias’ determines how we call the link. We’ll show it by example:</p>
+
+<p>If the name <code class="highlighter-rouge">ahmad</code> makes a link to the name <code class="highlighter-rouge">basia</code>, but doesn’t set an alias, then the name of the link is <code class="highlighter-rouge">ahmad#basia</code>. However, if <code class="highlighter-rouge">ahmad</code> set the alias of the link to <code class="highlighter-rouge">greatBasia</code>, then the name of the link is <code class="highlighter-rouge">ahmad#greatBasia</code>.</p>
+
+<h3 id="43-types-of-links">4.3. Types of links</h3>
+<p>The type of the link determines who actually owns it.</p>
+
+<p>To keep it clear and simple, we defined only three types of links. These types give ownership of the link either to the linker, linkee, or a combination of both of them.</p>
+
+<p>The types are as follows.</p>
+
+<ol>
+  <li><strong>Linker control</strong>. The link is not transferable, only the linker can extend or cancel it.</li>
+  <li><strong>Linkee control</strong>. The link is transferable, where only the linkee can extend, cancel or transfer it.</li>
+  <li><strong>Mixed control</strong>. Both the linker and the linkee can transfer, extend or cancel the link.</li>
+</ol>
+
+<h3 id="44-resolver-and-inheritance">4.4. resolver and inheritance</h3>
+<p>An important feature of links is how they inherit data from the linkee.</p>
+
+<p>By default, everything is inherited from the linkee. This means that if the resolver of the link is empty, then every query for data from the link is like a query to the linkee.</p>
+
+<p>However, a link can override data from the linkee or extend it, by having its own resolver.</p>
+
+<h3 id="45-woolball-is-an-extension-of-subdomains-name-systems">4.5. Woolball is an extension of subdomains name systems</h3>
+<p>We said that Woolball is an extension of the current name systems (DNS, ENS), so we have to justify that. Basically, we need to explain how you can do with links everything you can do with subdomains.</p>
+
+<p>You can create two types of subdomains. Either a subdomain you give someone else (for them to have a cool name) or a subdomain you use for your own usage (like, for your email server).</p>
+
+<p>A link to someone can do everything that a subdomain you gave to this someone can do. Easy.</p>
+
+<p>But what’s the equivalent of a subdomain you created for your own usage. Well, it’s a link to yourself.</p>
+
+<p>To be clear, links can do everything subdomains can do, but subdomains can’t do everything a link can do. Hence it’s an extension.</p>
+
+<h2 id="5-interaction-between-links-and-names">5. Interaction Between Links and Names</h2>
+<p>The power of Woolball comes out when considering the interaction between links and names. This interaction generates naturally three important systems:</p>
+
+<ol>
+  <li>Web3 accounts.</li>
+  <li>A reputation system.</li>
+  <li>Structured DAOs.</li>
+</ol>
+
+<h3 id="51-web3-accounts">5.1. Web3 accounts</h3>
+<p>We explain how Woolball generates a Web3 accounts system by an example.</p>
+
+<p>Let’s say that a DAO called ExampleDAO wants to give an account to one of its members, Alice. How does it do that? It creates a link from <code class="highlighter-rouge">exampleDAO</code> to the name <code class="highlighter-rouge">alice</code>, leaving the alias empty.</p>
+
+<p>… and that’s it! Alice has an account in ExampleDAO called <code class="highlighter-rouge">exampledao#alice</code>.</p>
+
+<p>In which sense is it an account? If ExampleDAO tries to get data from <code class="highlighter-rouge">exampledao#alice</code>, it sees the resolver is empty (since Alice didn’t do anything yet). But then it <em>follows</em> the link to <code class="highlighter-rouge">alice</code>, and gets the data from the resolver of <code class="highlighter-rouge">alice</code>.</p>
+
+<p>See, there’s no need for Alice to fill up anything new for this account.</p>
+
+<p>This works also in the opposite direction. If Alice logs into ExampleDAO with the name <code class="highlighter-rouge">alice</code>, then the system follows the link <em>backwards</em>, recognizes that <code class="highlighter-rouge">alice</code> is also <code class="highlighter-rouge">exampledao#alice</code>, and approves the login attempt.</p>
+
+<p>That way Alice doesn’t need to manage a new user name, but she can simply use her standard name for this account.</p>
+
+<p>When does Alice define a new resolver for <code class="highlighter-rouge">exampledao#alice</code>? when she wants to override or expand the resolver of <code class="highlighter-rouge">alice</code>.</p>
+
+<p>There are double benefits to this accounts system.</p>
+
+<p>On the one hand, it’s super easy for anyone to make accounts for other people in their organization, Daaps, or platforms. On the other hand, people don’t need to get lost in managing all these accounts; their main name is a global account for everything they use in web3.</p>
+
+<h3 id="52-reputation">5.2. Reputation</h3>
+<p>A link name system can generate a reputation score for names.</p>
+
+<p>Just think how useful that is. You can screen spammers, bots, or all those things you don’t like, based on their low reputation score. You can trust people you don’t know because they have a high reputation. It will feel so much more comfortable communicating with strangers in a name system that has an internal reputation system in place, right?</p>
+
+<p>There are several ways to create reputation systems for Woolball. We describe here one method. It’s not necessarily the best one, but it’s one of the simpler ones.</p>
+
+<p>Reputation is a subjective thing, so there is no such thing as a “perfect reputation system”. The quality of a system is judged differently by different people</p>
+
+<h4 id="521-a-simple-reputation-system">5.2.1. A simple reputation system</h4>
+<p>First, select a “trust set” of trusted names. This is a crucial step! The better the trust set is (like, the more reliable the names in it are), the more accurate the reputation score will be.</p>
+
+<p>Each name in the trust set has a perfect reputation score of a 100.</p>
+
+<p>For each name outside the trust set, calculate how many names in the trust set created a link to this name. Each such link equals a point. If the name has a 100 points (i.e., at least a 100 different names in the trust set have a link to it), we add it to the trust set and recalculate the score of all the other names.</p>
+
+<p>We can easily extend this method to calculate also reputation points for links between names outside the trust set (but each such link would be worth less than one point). But we save such extensions for a different  article in order to keep the example simple.</p>
+
+<h3 id="53-structured-daos">5.3. Structured DAOs</h3>
+<p>Many DAOs have some internal structure, with stewards, delegates, secretaries, workgroups, subgroups, etc. See for example ENS DAO and Gitcoin DAO.</p>
+
+<p>Right now those DAOs need an external tool to make and manage this structure, but with Woolball a structure can be made using the name system itself.</p>
+
+<p>What if you got three stewards? Just give them all links from the name of the DAO in the style of <code class="highlighter-rouge">dao#stewards#steward1</code>. The same goes for workgroups or any role in the DAO.  It’s also easy to update the rules when people change, you just updated the link!</p>
+
+<p>Links are a simple way to give role X to the person with the name Y.</p>
+
+<h2 id="6-integration-with-other-name-systems">6. Integration with Other Name Systems</h2>
+<p>Integration with other name systems on the same blockchain is possible using a name wrapper contract.</p>
+
+<p>In this case, the name wrapper contract owns the name and provides the regular functionality (create a link, modify a link, etc), but the contract also performs some actions on the other name system.</p>
+
+<p>For example, when someone asks a name wrapper contract to create a “link to itself”, it also creates a corresponding subdomain in the other name system.</p>
+
+<h2 id="7-summary">7. Summary</h2>
+<p>There is a lot of attention going into name systems in the last few months. Some of that is hype, but lots of that is because of need.</p>
+
+<p>Web3 needs a good name system, and we think that the tech existing so far is great, but not perfect yet.</p>
+
+<p>There’s a path to walk before we get the mature name system Web3 deserves. We hope Woolball is a step in the right direction.</p>
+
+<p><img style=" float: right; padding: 20px" src="/blog/resources/images/woolball/uniwoolball.png" /></p>
+<h2 id="8-acknowledgment">8. Acknowledgment</h2>
+<p>There were many people who contributed to turning this article from a strange idea into a complete one. With no particular order, thanks to @zz9, @sshmatrix, @wolfram.eth, and @enspunks. I use the names I know you from Discord since I don’t know the full name of everyone. Thanks goes also to Craig Sailor who doesn’t have a Discord handle.</p>
+
+<p>Chris Powers gave so many enlighting comments that he deserves a separate thank you. Fabio Saclini gave, as always, too many creative ideas for me to handle, but specifically had the brilliant proposal to represent links with a ‘#’.</p>
+
+<p>Last but not least, thanks to @tomlightning and @elle from Esteroids who had to suffer me talking about this strange name system for almost 2 weeks.</p>
+
+<p><strong>(in the picture: Uniwoolball, generated by Fabio Scalini)</strong></p>
+
+</div>
+
+<div class="pagination">
+  
+  
+    <a href="/blog/2021-10-11/community_websites_wnft_tokennized_websites" class="right arrow">&#8594;</a>
+  
+
+  <a href="#" class="top">Top</a>
+</div>
+
+    </main>
+
+    <footer>
+  <span>
+     -- Dwebsites love robots, androids and electric sheep --
+  </span>
+</footer>
+
+  </body>
+</html>

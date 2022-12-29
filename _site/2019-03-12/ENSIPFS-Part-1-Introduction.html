@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>ENS+IPFS Part 1: Introduction | Neiman’s Blog</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="ENS+IPFS Part 1: Introduction" />
+<meta name="author" content="Neiman" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="What is ENS? What is IPFS? How these technologies are used to store this website? a guide for the Perplexed" />
+<meta property="og:description" content="What is ENS? What is IPFS? How these technologies are used to store this website? a guide for the Perplexed" />
+<link rel="canonical" href="http://localhost:4000/blog/2019-03-12/ENSIPFS-Part-1-Introduction" />
+<meta property="og:url" content="http://localhost:4000/blog/2019-03-12/ENSIPFS-Part-1-Introduction" />
+<meta property="og:site_name" content="Neiman’s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-03-12T00:00:00+01:00" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","url":"http://localhost:4000/blog/2019-03-12/ENSIPFS-Part-1-Introduction","headline":"ENS+IPFS Part 1: Introduction","dateModified":"2019-03-12T00:00:00+01:00","datePublished":"2019-03-12T00:00:00+01:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2019-03-12/ENSIPFS-Part-1-Introduction"},"author":{"@type":"Person","name":"Neiman"},"description":"What is ENS? What is IPFS? How these technologies are used to store this website? a guide for the Perplexed","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/blog/assets/main.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/assets/apple-touch-icon.png">
+
+</head>
+
+
+  <body>
+
+    <nav class="nav">
+  <div class="nav-container">
+    <a href="/blog/">
+    	<img src="/blog/resources/images/neiman_head_circle.png " height="80">
+    </a>
+    <ul>
+      <li><a href="/blog/">Home</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+    <main>
+      <div class="post">
+  <div class="post-info">
+    <span>Written by</span>
+    
+        Neiman
+    
+
+    
+      <br>
+      <span>on&nbsp;</span><time datetime="2019-03-12 00:00:00 +0100">March 12, 2019</time>
+    
+  </div>
+
+  <h1 class="post-title">ENS+IPFS Part 1&#58; Introduction</h1>
+  <div class="post-line"></div>
+
+  <div class="warning alert">
+  <p>This is Part 1 of the ENS+IPFS posts. <a href="/blog/2019-03-13/ENSIPFS-Part-2-Accessing">Part 2</a> explains how to access such websites, while <a href="/blog/2019-03-14/ENSIPFS-Part-3-Creation">Part 3</a> explains how to create them.</p>
+</div>
+
+<p>There are two ways to access this website.</p>
+
+<p>One is “boring”, with <code class="highlighter-rouge">almonit.club</code>. The other is adventurous, with the non-standard address <code class="highlighter-rouge">almonit.eth</code>.</p>
+
+<p>What’s the difference between the two?</p>
+
+<p>Almonit.club is hosted like a normal website. It is stored on a server, and the name almonit.club is registered with a regular name service (DNS). To access almonit.club, the browser first asks the DNS in which server it is stored, and then gets the website from that server.</p>
+
+<p>With almonit.eth website we took a bit different approach. Instead of a server, we use IPFS, and instead of DNS, we use ENS.</p>
+
+<h4 id="ipfs--">IPFS  <img style="width: 120px; float:right;" src="/blog/resources/images/ENSIPFS/IPFS.png" /></h4>
+
+<p>IPFS is a peer-to-peer protocol to store data. There are some similarities between IPFS and BitTorrent.</p>
+
+<p>For example, similar that in BitTorrent data needs at least one seed node to be available, in IPFS websites need to be on at least one node. As long as we make sure that one such node exists, our website will enjoy all the regular advantages of P2P network (resilient, censorship-resistance, sharing resources of others and more).</p>
+
+<p>Every IPFS data has an address (called a hash). To access almonit.eth, you need to know the address of its latest version. The address changes every time the websites updates.</p>
+
+<h4 id="ens-">ENS <img style="width: 120px; float:right;" src="/blog/resources/images/ENSIPFS/ENS.png" /></h4>
+<p>ENS is the Ethereum Name Service. It serves the same rule that DNS does in the traditional website settings. While DNS tells the server where a website is stored, ENS tells what is the latest IPFS address of the website.</p>
+
+<p>ENS has a few advantage. It’s censorship resistance; as far as the Ethereum blockchain is available, ENS also is. It’s also pseudonymous, cheaper (in most cases) than DNS, and got a nice anti-squatting mechanism (squatting is when people buy popular names they don’t need, in order to sell it for others for expensive prices).</p>
+
+<h4 id="ensipfs-">ENS+IPFS <img style="width: 274px; float:right;" src="/blog/resources/images/ENSIPFS/ENSIPFS.png" /></h4>
+
+<p>To access almonit.eth, you first ask ENS what’s the latest IPFS address of the website, and then ask IPFS for the website itself.</p>
+
+<p>Sounds complicated? don’t worry. There are tools for accessing ENS+IPFS websites, and they are explained in the next article, <a href="/blog/2019-03-13/ENSIPFS-Part-2-Accessing">ENS+IPFS: part 2</a>.</p>
+
+<p>ENS+IPFS websites are as censorship resistance (but easier and cheaper to make) as Darknet websites, but much less anonymous. We don’t really need it for Almonit; but hey, ain’t we allowed to do things just for the heck of it?</p>
+
+<div class="success alert">
+  <p>Both IPFS and ENS are still in experimental stage. The tools for using them are immature, and in the case of ENS even the technology itself still changes quite often. Don’t use ENS+IPSF for the polished experience in this point of time, use it for research purposes.</p>
+</div>
+
+<p><strong>[This article was originally published in Almonit blog with small modifications]</strong></p>
+
+</div>
+
+<div class="pagination">
+  
+    <a href="/blog/2019-03-13/ENSIPFS-Part-2-Accessing" class="left arrow">&#8592;</a>
+  
+  
+    <a href="/blog/2019-03-10/introduction-to-almonit" class="right arrow">&#8594;</a>
+  
+
+  <a href="#" class="top">Top</a>
+</div>
+
+    </main>
+
+    <footer>
+  <span>
+     -- Dwebsites love robots, androids and electric sheep --
+  </span>
+</footer>
+
+  </body>
+</html>

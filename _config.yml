@@ -1,0 +1,38 @@
+# Site settings
+title:          Neiman's Blog
+description:    Selection of article about decentralized websites from Neiman.
+baseurl:        "/blog"
+url:            "https://neiman.eth.limo"
+
+# Author
+author:
+  name:         Neiman
+  url:          https://neiman.eth.limo
+  email:        eyal@esteroids.xyz
+
+# Build settings
+markdown:       kramdown
+include:
+  - _pages
+
+# Assets
+sass:
+  sass_dir:     _sass
+  style:        compressed
+
+# Gems
+plugins:
+  - jekyll-feed
+  - jekyll-paginate
+  - jekyll-seo-tag
+  # - jemoji #Uncomment this to allow emoji in your post
+
+# Permalinks
+permalink:      /:year-:month-:day/:title
+paginate:       5
+
+# Excludes
+exclude: [ Gemfile, Gemfile.lock, tale.gemspec ]
+
+# Disqus (Set to your disqus id)
+disqus:         jekyll-tale
